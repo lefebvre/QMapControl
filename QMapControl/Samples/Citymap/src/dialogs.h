@@ -21,13 +21,15 @@ public:
     InfoDialog(QWidget* parent = 0);
 
     //! Disable copy constructor.
-    ///InfoDialog(const InfoDialog&) = delete; @todo re-add once MSVC supports default/delete syntax.
+    /// InfoDialog(const InfoDialog&) = delete; @todo re-add once MSVC supports default/delete
+    /// syntax.
 
     //! Disable copy assignment.
-    ///InfoDialog& operator=(const InfoDialog&) = delete; @todo re-add once MSVC supports default/delete syntax.
+    /// InfoDialog& operator=(const InfoDialog&) = delete; @todo re-add once MSVC supports
+    /// default/delete syntax.
 
     //! Destructor.
-    ~InfoDialog() { } /// = default; @todo re-add once MSVC supports default/delete syntax.
+    ~InfoDialog() {} /// = default; @todo re-add once MSVC supports default/delete syntax.
 
     /*!
      * Set the infotext.
@@ -38,5 +40,4 @@ public:
 private:
     /// The text info widget.
     QTextEdit* m_text_info;
-
 };

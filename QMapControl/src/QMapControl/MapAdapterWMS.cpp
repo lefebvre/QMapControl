@@ -1,27 +1,27 @@
 /*
-*
-* This file is part of QMapControl,
-* an open-source cross-platform map widget
-*
-* Copyright (C) 2007 - 2008 Kai Winter
-*
-* This program is free software: you can redistribute it and/or modify
-* it under the terms of the GNU Lesser General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU Lesser General Public License for more details.
-*
-* You should have received a copy of the GNU Lesser General Public License
-* along with QMapControl. If not, see <http://www.gnu.org/licenses/>.
-*
-* Contact e-mail: kaiwinter@gmx.de
-* Program URL   : http://qmapcontrol.sourceforge.net/
-*
-*/
+ *
+ * This file is part of QMapControl,
+ * an open-source cross-platform map widget
+ *
+ * Copyright (C) 2007 - 2008 Kai Winter
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with QMapControl. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Contact e-mail: kaiwinter@gmx.de
+ * Program URL   : http://qmapcontrol.sourceforge.net/
+ *
+ */
 
 #include "MapAdapterWMS.h"
 
@@ -36,8 +36,10 @@
 
 namespace qmapcontrol
 {
-    MapAdapterWMS::MapAdapterWMS(const QUrl& base_url, const std::set<projection::EPSG>& epsg_projections, QObject* parent)
-          : MapAdapter(base_url, epsg_projections, 0, 17, 0, parent)
+    MapAdapterWMS::MapAdapterWMS(const QUrl& base_url,
+                                 const std::set<projection::EPSG>& epsg_projections,
+                                 QObject* parent)
+        : MapAdapter(base_url, epsg_projections, 0, 17, 0, parent)
     {
         // Perform initial query modificiations.
         setBaseUrl(base_url);
@@ -84,23 +86,24 @@ namespace qmapcontrol
         }
 
         // Is LAYERS specified?
-        //if(url_query.hasQueryItem("LAYERS") == false)
+        // if(url_query.hasQueryItem("LAYERS") == false)
         //{
         //    // Set the default layers (TBD).
         //    url_query.addQueryItem("LAYERS", TBD);
         //}
 
         // Is SRS or CRS specified?
-        if(url_query.hasQueryItem("SRS") == false &&
-                url_query.hasQueryItem("CRS") == false)
+        if(url_query.hasQueryItem("SRS") == false && url_query.hasQueryItem("CRS") == false)
         {
             // Set the default srs (projection system value).
-            url_query.addQueryItem("SRS", QString("EPSG:") + QString::number(projection::get().epsg()));
-            url_query.addQueryItem("CRS", QString("EPSG:") + QString::number(projection::get().epsg()));
+            url_query.addQueryItem("SRS",
+                                   QString("EPSG:") + QString::number(projection::get().epsg()));
+            url_query.addQueryItem("CRS",
+                                   QString("EPSG:") + QString::number(projection::get().epsg()));
 
-            //url_query.addQueryItem("SRS", "EPSG:4326"); // Equirectangular projection (lat/long)
-            //url_query.addQueryItem("SRS", "EPSG:900913"); // Google Mercator projection
-            //url_query.addQueryItem("SRS", "EPSG:3857"); // Spherical Mercator projection
+            // url_query.addQueryItem("SRS", "EPSG:4326"); // Equirectangular projection (lat/long)
+            // url_query.addQueryItem("SRS", "EPSG:900913"); // Google Mercator projection
+            // url_query.addQueryItem("SRS", "EPSG:3857"); // Spherical Mercator projection
         }
 
         // Is STYLES specified?
@@ -146,10 +149,10 @@ namespace qmapcontrol
 
         // Set BBOX (x1,y1,x2,y2).
         url_query.removeQueryItem("BBOX");
-        url_query.addQueryItem("BBOX", getBBox(-180 + x * coord_per_tile_x,
-                                            90 - (y + 1) * coord_per_tile_y,
-                                            (-180 + x * coord_per_tile_x) + coord_per_tile_x,
-                                            (90 - (y + 1) * coord_per_tile_y) + coord_per_tile_y));
+        url_query.addQueryItem("BBOX",
+                               getBBox(-180 + x * coord_per_tile_x, 90 - (y + 1) * coord_per_tile_y,
+                                       (-180 + x * coord_per_tile_x) + coord_per_tile_x,
+                                       (90 - (y + 1) * coord_per_tile_y) + coord_per_tile_y));
 
         // Create a new url with the modified url query.
         QUrl modified_url(getBaseUrl());
@@ -159,13 +162,14 @@ namespace qmapcontrol
         return QUrl(modified_url);
     }
 
-    QString MapAdapterWMS::getBBox(const qreal& x1, const qreal& y1, const qreal& x2, const qreal& y2) const
+    QString
+    MapAdapterWMS::getBBox(const qreal& x1, const qreal& y1, const qreal& x2, const qreal& y2) const
     {
         // Return the formatted BBOX values.
         return QString("%1,%2,%3,%4")
-                .arg(QString::number(x1, 'f', 6))
-                .arg(QString::number(y1, 'f', 6))
-                .arg(QString::number(x2, 'f', 6))
-                .arg(QString::number(y2, 'f', 6));
+            .arg(QString::number(x1, 'f', 6))
+            .arg(QString::number(y1, 'f', 6))
+            .arg(QString::number(x2, 'f', 6))
+            .arg(QString::number(y2, 'f', 6));
     }
 }

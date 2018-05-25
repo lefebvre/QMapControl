@@ -1,27 +1,27 @@
 /*
-*
-* This file is part of QMapControl,
-* an open-source cross-platform map widget
-*
-* Copyright (C) 2007 - 2008 Kai Winter
-*
-* This program is free software: you can redistribute it and/or modify
-* it under the terms of the GNU Lesser General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU Lesser General Public License for more details.
-*
-* You should have received a copy of the GNU Lesser General Public License
-* along with QMapControl. If not, see <http://www.gnu.org/licenses/>.
-*
-* Contact e-mail: kaiwinter@gmx.de
-* Program URL   : http://qmapcontrol.sourceforge.net/
-*
-*/
+ *
+ * This file is part of QMapControl,
+ * an open-source cross-platform map widget
+ *
+ * Copyright (C) 2007 - 2008 Kai Winter
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with QMapControl. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Contact e-mail: kaiwinter@gmx.de
+ * Program URL   : http://qmapcontrol.sourceforge.net/
+ *
+ */
 
 #pragma once
 
@@ -31,8 +31,8 @@
 #include <vector>
 
 // Local includes.
-#include "qmapcontrol_global.h"
 #include "Point.h"
+#include "qmapcontrol_global.h"
 
 /*!
  * @author Chris Stylianou <chris5287@gmail.com>
@@ -42,32 +42,35 @@ namespace qmapcontrol
     /*!
      * Based on: http://en.wikipedia.org/wiki/Quadtree
      */
-    template <class T>
-    class QMAPCONTROL_EXPORT QuadTreeContainer
+    template <class T> class QMAPCONTROL_EXPORT QuadTreeContainer
     {
     public:
         //! Constuctor.
         /*!
          * Quad Tree Container constructor.
-         * @param capacity The number of items this quad tree container can store before it's children are created/used.
-         * @param boundary_coord The bounding box area that this quad tree container covers in coordinates.
+         * @param capacity The number of items this quad tree container can store before it's
+         * children are created/used.
+         * @param boundary_coord The bounding box area that this quad tree container covers in
+         * coordinates.
          */
         QuadTreeContainer(const size_t& capacity, const RectWorldCoord& boundary_coord)
-            : m_capacity(capacity),
-              m_boundary_coord(boundary_coord)
+            : m_capacity(capacity), m_boundary_coord(boundary_coord)
         {
             // Reserve the container size.
             m_points.reserve(capacity);
         }
 
         //! Disable copy constructor.
-        ///QuadTreeContainer(const QuadTreeContainer&) = delete; @todo re-add once MSVC supports default/delete syntax.
+        /// QuadTreeContainer(const QuadTreeContainer&) = delete; @todo re-add once MSVC supports
+        /// default/delete syntax.
 
         //! Disable copy assignment.
-        ///QuadTreeContainer& operator=(const QuadTreeContainer&) = delete; @todo re-add once MSVC supports default/delete syntax.
+        /// QuadTreeContainer& operator=(const QuadTreeContainer&) = delete; @todo re-add once MSVC
+        /// supports default/delete syntax.
 
         //! Destructor.
-        virtual ~QuadTreeContainer() { } /// = default; @todo re-add once MSVC supports default/delete syntax.
+        virtual ~QuadTreeContainer() {
+        } /// = default; @todo re-add once MSVC supports default/delete syntax.
 
         /*!
          * Fetches objects within the specified bounding box range.
@@ -226,10 +229,12 @@ namespace qmapcontrol
 
     private:
         //! Disable copy constructor.
-        QuadTreeContainer(const QuadTreeContainer&); /// @todo remove once MSVC supports default/delete syntax.
+        QuadTreeContainer(const QuadTreeContainer&); /// @todo remove once MSVC supports
+                                                     /// default/delete syntax.
 
         //! Disable copy assignment.
-        QuadTreeContainer& operator=(const QuadTreeContainer&); /// @todo remove once MSVC supports default/delete syntax.
+        QuadTreeContainer& operator=(const QuadTreeContainer&); /// @todo remove once MSVC supports
+                                                                /// default/delete syntax.
 
         /*!
          * Creates the child nodes.
@@ -240,19 +245,30 @@ namespace qmapcontrol
             const QSizeF half_size = m_boundary_coord.rawRect().size() / 2.0;
 
             // Construct the north east child.
-            const RectWorldCoord north_east(PointWorldCoord(m_boundary_coord.rawRect().left() + half_size.width(), m_boundary_coord.rawRect().top()), half_size);
+            const RectWorldCoord north_east(
+                PointWorldCoord(m_boundary_coord.rawRect().left() + half_size.width(),
+                                m_boundary_coord.rawRect().top()),
+                half_size);
             m_child_north_east.reset(new QuadTreeContainer<T>(m_capacity, north_east));
 
             // Construct the north west child.
-            const RectWorldCoord north_west(PointWorldCoord(m_boundary_coord.rawRect().left(), m_boundary_coord.rawRect().top()), half_size);
+            const RectWorldCoord north_west(PointWorldCoord(m_boundary_coord.rawRect().left(),
+                                                            m_boundary_coord.rawRect().top()),
+                                            half_size);
             m_child_north_west.reset(new QuadTreeContainer<T>(m_capacity, north_west));
 
             // Construct the south east child.
-            const RectWorldCoord south_east(PointWorldCoord(m_boundary_coord.rawRect().left() + half_size.width(), m_boundary_coord.rawRect().top() + half_size.height()), half_size);
+            const RectWorldCoord south_east(
+                PointWorldCoord(m_boundary_coord.rawRect().left() + half_size.width(),
+                                m_boundary_coord.rawRect().top() + half_size.height()),
+                half_size);
             m_child_south_east.reset(new QuadTreeContainer<T>(m_capacity, south_east));
 
             // Construct the south west child.
-            const RectWorldCoord south_west(PointWorldCoord(m_boundary_coord.rawRect().left(), m_boundary_coord.rawRect().top() + half_size.height()), half_size);
+            const RectWorldCoord south_west(
+                PointWorldCoord(m_boundary_coord.rawRect().left(),
+                                m_boundary_coord.rawRect().top() + half_size.height()),
+                half_size);
             m_child_south_west.reset(new QuadTreeContainer<T>(m_capacity, south_west));
         }
 

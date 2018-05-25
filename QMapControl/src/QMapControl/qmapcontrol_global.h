@@ -9,9 +9,9 @@
  */
 
 #ifdef QMAPCONTROL_LIBRARY
-    /// Defines that the specified function, variable or class should be exported.
-    #define QMAPCONTROL_EXPORT Q_DECL_EXPORT
+/// Defines that the specified function, variable or class should be exported.
+#define QMAPCONTROL_EXPORT Q_DECL_EXPORT
 #else
-    /// Defines that the specified function, variable or class should be imported.
-    #define QMAPCONTROL_EXPORT Q_DECL_IMPORT
+/// Defines that the specified function, variable or class should be imported.
+#define QMAPCONTROL_EXPORT Q_DECL_IMPORT
 #endif

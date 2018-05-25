@@ -1,34 +1,34 @@
 /*
-*
-* This file is part of QMapControl,
-* an open-source cross-platform map widget
-*
-* Copyright (C) 2007 - 2008 Kai Winter
-*
-* This program is free software: you can redistribute it and/or modify
-* it under the terms of the GNU Lesser General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU Lesser General Public License for more details.
-*
-* You should have received a copy of the GNU Lesser General Public License
-* along with QMapControl. If not, see <http://www.gnu.org/licenses/>.
-*
-* Contact e-mail: kaiwinter@gmx.de
-* Program URL   : http://qmapcontrol.sourceforge.net/
-*
-*/
+ *
+ * This file is part of QMapControl,
+ * an open-source cross-platform map widget
+ *
+ * Copyright (C) 2007 - 2008 Kai Winter
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with QMapControl. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Contact e-mail: kaiwinter@gmx.de
+ * Program URL   : http://qmapcontrol.sourceforge.net/
+ *
+ */
 
 #pragma once
 
 // Qt includes.
 #include <QtCore/QDir>
-#include <QtCore/QObject>
 #include <QtCore/QList>
+#include <QtCore/QObject>
 #include <QtCore/QUrl>
 #include <QtGui/QPixmap>
 #include <QtNetwork/QNetworkProxy>
@@ -39,8 +39,8 @@
 #include <memory>
 
 // Local includes.
-#include "qmapcontrol_global.h"
 #include "NetworkManager.h"
+#include "qmapcontrol_global.h"
 
 /*!
  * @author Kai Winter <kaiwinter@gmx.de>
@@ -63,13 +63,15 @@ namespace qmapcontrol
 
     public:
         //! Disable copy constructor.
-        /// ImageManager(const ImageManager&) = delete; @todo re-add once MSVC supports default/delete syntax.
+        /// ImageManager(const ImageManager&) = delete; @todo re-add once MSVC supports
+        /// default/delete syntax.
 
         //! Disable copy assignment.
-        ///ImageManager& operator=(const ImageManager&) = delete; @todo re-add once MSVC supports default/delete syntax.
+        /// ImageManager& operator=(const ImageManager&) = delete; @todo re-add once MSVC supports
+        /// default/delete syntax.
 
         //! Destructor.
-        ~ImageManager() { } /// = default; @todo re-add once MSVC supports default/delete syntax.
+        ~ImageManager() {} /// = default; @todo re-add once MSVC supports default/delete syntax.
 
         /*!
          * Fetch the tile size in pixels.
@@ -92,7 +94,8 @@ namespace qmapcontrol
         /*!
          * Enables the persistent cache, specifying the directory and expiry timeout.
          * @param path The path where the images should be stored.
-         * @param expiry The max age (in minutes) of an image before its removed and a new one is requested (0 to keep forever).
+         * @param expiry The max age (in minutes) of an image before its removed and a new one is
+         * requested (0 to keep forever).
          * @return whether the persistent cache was enabled.
          */
         bool enablePersistentCache(const std::chrono::minutes& expiry, const QDir& path);
@@ -174,10 +177,12 @@ namespace qmapcontrol
         ImageManager(const int& tile_size_px, QObject* parent = 0);
 
         //! Disable copy constructor.
-        ImageManager(const ImageManager&); /// @todo remove once MSVC supports default/delete syntax.
+        ImageManager(const ImageManager&); /// @todo remove once MSVC supports default/delete
+                                           /// syntax.
 
         //! Disable copy assignment.
-        ImageManager& operator=(const ImageManager&); /// @todo remove once MSVC supports default/delete syntax.
+        ImageManager& operator=(const ImageManager&); /// @todo remove once MSVC supports
+                                                      /// default/delete syntax.
 
         /*!
          * Create a loading pixmap for use.

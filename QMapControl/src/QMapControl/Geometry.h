@@ -1,27 +1,27 @@
 /*
-*
-* This file is part of QMapControl,
-* an open-source cross-platform map widget
-*
-* Copyright (C) 2007 - 2008 Kai Winter
-*
-* This program is free software: you can redistribute it and/or modify
-* it under the terms of the GNU Lesser General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU Lesser General Public License for more details.
-*
-* You should have received a copy of the GNU Lesser General Public License
-* along with QMapControl. If not, see <http://www.gnu.org/licenses/>.
-*
-* Contact e-mail: kaiwinter@gmx.de
-* Program URL   : http://qmapcontrol.sourceforge.net/
-*
-*/
+ *
+ * This file is part of QMapControl,
+ * an open-source cross-platform map widget
+ *
+ * Copyright (C) 2007 - 2008 Kai Winter
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with QMapControl. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Contact e-mail: kaiwinter@gmx.de
+ * Program URL   : http://qmapcontrol.sourceforge.net/
+ *
+ */
 
 #pragma once
 
@@ -38,16 +38,18 @@
 #include <string>
 
 // Local includes.
-#include "qmapcontrol_global.h"
 #include "Point.h"
+#include "qmapcontrol_global.h"
 
 namespace qmapcontrol
 {
     //! Main class for objects that should be painted in maps.
     /*!
-     * Geometry is the root class of the hierarchy. Geometry is an abstract (non-instantiable) class.
+     * Geometry is the root class of the hierarchy. Geometry is an abstract (non-instantiable)
+     * class.
      *
-     * All geometries can emit click events, if the containing layer receives click events (the default).
+     * All geometries can emit click events, if the containing layer receives click events (the
+     * default).
      *
      * This class and the derived classes Point and LineString are leant on the Simple
      * Feature Specification of the Open Geospatial Consortium.
@@ -100,17 +102,21 @@ namespace qmapcontrol
          * @param zoom_minimum The minimum zoom level to show this geometry at.
          * @param zoom_maximum The maximum zoom level to show this geometry at.
          */
-        Geometry(const GeometryType& geometry_type, const int& zoom_minimum = 0, const int& zoom_maximum = 17);
+        Geometry(const GeometryType& geometry_type,
+                 const int& zoom_minimum = 0,
+                 const int& zoom_maximum = 17);
 
     public:
         //! Disable copy constructor.
-        ///Geometry(const Geometry&) = delete; @todo re-add once MSVC supports default/delete syntax.
+        /// Geometry(const Geometry&) = delete; @todo re-add once MSVC supports default/delete
+        /// syntax.
 
         //! Disable copy assignment.
-        ///Geometry& operator=(const Geometry&) = delete; @todo re-add once MSVC supports default/delete syntax.
+        /// Geometry& operator=(const Geometry&) = delete; @todo re-add once MSVC supports
+        /// default/delete syntax.
 
         //! Destructor.
-        virtual ~Geometry() { } /// = default; @todo re-add once MSVC supports default/delete syntax.
+        virtual ~Geometry() {} /// = default; @todo re-add once MSVC supports default/delete syntax.
 
         /*!
          * Fetches the geometry type.
@@ -186,9 +192,13 @@ namespace qmapcontrol
          * @param key The meta-data's key for the value to display.
          * @param zoom_minimum The minimum zoom to display the meta-data value at.
          * @param alignment_type The alignment type to use when displaying the meta-data value.
-         * @param alignment_offset_px The offset that the meta-data value is displayed from in pixels.
+         * @param alignment_offset_px The offset that the meta-data value is displayed from in
+         * pixels.
          */
-        void setMetadataDisplayed(const std::string& key, const int& zoom_minimum = 10, const AlignmentType& alignment_type = AlignmentType::TopRight, const double& alignment_offset_px = 5.0);
+        void setMetadataDisplayed(const std::string& key,
+                                  const int& zoom_minimum = 10,
+                                  const AlignmentType& alignment_type = AlignmentType::TopRight,
+                                  const double& alignment_offset_px = 5.0);
 
         /*!
          * Calculates the top-left world point in pixels after the alignment type has been applied.
@@ -197,7 +207,9 @@ namespace qmapcontrol
          * @param geometry_size_px The geometry object (widget/pixmap) at this zoom level.
          * @return the top-left world point in pixels.
          */
-        PointWorldPx calculateTopLeftPoint(const PointWorldPx& point_px, const AlignmentType& alignment_type, const QSizeF& geometry_size_px) const;
+        PointWorldPx calculateTopLeftPoint(const PointWorldPx& point_px,
+                                           const AlignmentType& alignment_type,
+                                           const QSizeF& geometry_size_px) const;
 
     public:
         /*!
@@ -218,10 +230,14 @@ namespace qmapcontrol
         /*!
          * Draws the geometry to a pixmap using the provided painter.
          * @param painter The painter that will draw to the pixmap.
-         * @param backbuffer_rect_coord Only draw geometries that are contained in the backbuffer rect (world coordinates).
+         * @param backbuffer_rect_coord Only draw geometries that are contained in the backbuffer
+         * rect (world coordinates).
          * @param controller_zoom The current controller zoom.
          */
-        virtual void draw(QPainter& painter, const RectWorldCoord& backbuffer_rect_coord, const int& controller_zoom) = 0;
+        virtual void draw(QPainter& painter,
+                          const RectWorldCoord& backbuffer_rect_coord,
+                          const int& controller_zoom)
+            = 0;
 
     signals:
         /*!
@@ -246,7 +262,8 @@ namespace qmapcontrol
         Geometry(const Geometry&); /// @todo remove once MSVC supports default/delete syntax.
 
         //! Disable copy assignment.
-        Geometry& operator=(const Geometry&); /// @todo remove once MSVC supports default/delete syntax.
+        Geometry& operator=(const Geometry&); /// @todo remove once MSVC supports default/delete
+                                              /// syntax.
 
     private:
         /// The geometry type.

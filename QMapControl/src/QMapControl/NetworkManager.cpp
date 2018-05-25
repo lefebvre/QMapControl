@@ -1,27 +1,27 @@
 /*
-*
-* This file is part of QMapControl,
-* an open-source cross-platform map widget
-*
-* Copyright (C) 2007 - 2008 Kai Winter
-*
-* This program is free software: you can redistribute it and/or modify
-* it under the terms of the GNU Lesser General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU Lesser General Public License for more details.
-*
-* You should have received a copy of the GNU Lesser General Public License
-* along with QMapControl. If not, see <http://www.gnu.org/licenses/>.
-*
-* Contact e-mail: kaiwinter@gmx.de
-* Program URL   : http://qmapcontrol.sourceforge.net/
-*
-*/
+ *
+ * This file is part of QMapControl,
+ * an open-source cross-platform map widget
+ *
+ * Copyright (C) 2007 - 2008 Kai Winter
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with QMapControl. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Contact e-mail: kaiwinter@gmx.de
+ * Program URL   : http://qmapcontrol.sourceforge.net/
+ *
+ */
 
 #include "NetworkManager.h"
 
@@ -39,10 +39,12 @@ namespace qmapcontrol
     NetworkManager::NetworkManager(QObject* parent) : QObject(parent)
     {
         // Connect signal/slot to handle proxy authentication.
-        QObject::connect(&m_nam, &QNetworkAccessManager::proxyAuthenticationRequired, this, &NetworkManager::proxyAuthenticationRequired);
+        QObject::connect(&m_nam, &QNetworkAccessManager::proxyAuthenticationRequired, this,
+                         &NetworkManager::proxyAuthenticationRequired);
 
         // Connect signal/slot to handle finished downloads.
-        QObject::connect(&m_nam, &QNetworkAccessManager::finished, this, &NetworkManager::downloadFinished);
+        QObject::connect(&m_nam, &QNetworkAccessManager::finished, this,
+                         &NetworkManager::downloadFinished);
     }
 
     NetworkManager::~NetworkManager()
@@ -97,7 +99,8 @@ namespace qmapcontrol
         // Keep track of our success.
         bool success(false);
 
-        // Scope this as we later call "downloadQueueSize()" which also locks all download queue mutexes.
+        // Scope this as we later call "downloadQueueSize()" which also locks all download queue
+        // mutexes.
         {
             // Gain a lock to protect the downloading image container.
             QMutexLocker lock(&m_mutex_downloading_image);
@@ -131,10 +134,12 @@ namespace qmapcontrol
         }
     }
 
-    void NetworkManager::proxyAuthenticationRequired(const QNetworkProxy& proxy, QAuthenticator* authenticator)
+    void NetworkManager::proxyAuthenticationRequired(const QNetworkProxy& proxy,
+                                                     QAuthenticator* authenticator)
     {
         // Log proxy authentication request.
-        qDebug() << "Proxy Authentication Required for '" << proxy.hostName() << "' with the authenticator '" << &authenticator << "'";
+        qDebug() << "Proxy Authentication Required for '" << proxy.hostName()
+                 << "' with the authenticator '" << &authenticator << "'";
 
         // We need to capture the proxy login details.
         // Setup a form to capture these details.
@@ -181,7 +186,8 @@ namespace qmapcontrol
         if(reply->error() != QNetworkReply::NoError)
         {
             // Log error.
-            qDebug() << "Failed to download '" << reply->url() << "' with error '" << reply->errorString() << "'";
+            qDebug() << "Failed to download '" << reply->url() << "' with error '"
+                     << reply->errorString() << "'";
         }
         else
         {

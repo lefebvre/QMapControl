@@ -6,18 +6,21 @@
 
 namespace qmapcontrol
 {
-    GeometryPoint::GeometryPoint(const qreal& longitude, const qreal& latitude, const int& zoom_minimum, const int& zoom_maximum)
+    GeometryPoint::GeometryPoint(const qreal& longitude,
+                                 const qreal& latitude,
+                                 const int& zoom_minimum,
+                                 const int& zoom_maximum)
         : Geometry(Geometry::GeometryType::GeometryPoint, zoom_minimum, zoom_maximum),
           m_point_coord(PointWorldCoord(longitude, latitude))
     {
-
     }
 
-    GeometryPoint::GeometryPoint(const PointWorldCoord& point_coord, const int& zoom_minimum, const int& zoom_maximum)
+    GeometryPoint::GeometryPoint(const PointWorldCoord& point_coord,
+                                 const int& zoom_minimum,
+                                 const int& zoom_maximum)
         : Geometry(Geometry::GeometryType::GeometryPoint, zoom_minimum, zoom_maximum),
           m_point_coord(point_coord)
     {
-
     }
 
     const PointWorldCoord& GeometryPoint::coord() const
@@ -45,20 +48,25 @@ namespace qmapcontrol
     RectWorldCoord GeometryPoint::boundingBox(const int& controller_zoom) const
     {
         // Calculate the world point in pixels.
-        const PointWorldPx point_px(projection::get().toPointWorldPx(m_point_coord, controller_zoom));
+        const PointWorldPx point_px(
+            projection::get().toPointWorldPx(m_point_coord, controller_zoom));
 
         // Add 'fuzzy-factor' around point.
         /// @TODO expose the fuzzy factor as a setting?
         const QSizeF object_size_px(1.0, 1.0);
 
         // Calculate the top-left point.
-        const PointWorldPx top_left_point_px(calculateTopLeftPoint(point_px, AlignmentType::Middle, object_size_px));
+        const PointWorldPx top_left_point_px(
+            calculateTopLeftPoint(point_px, AlignmentType::Middle, object_size_px));
 
         // Calculate the bottom-right point.
-        const PointWorldPx bottom_right_point_px(top_left_point_px.x() + object_size_px.width(), top_left_point_px.y() + object_size_px.height());
+        const PointWorldPx bottom_right_point_px(top_left_point_px.x() + object_size_px.width(),
+                                                 top_left_point_px.y() + object_size_px.height());
 
         // Return the converted coord points.
-        return RectWorldCoord(projection::get().toPointWorldCoord(top_left_point_px, controller_zoom), projection::get().toPointWorldCoord(bottom_right_point_px, controller_zoom));
+        return RectWorldCoord(
+            projection::get().toPointWorldCoord(top_left_point_px, controller_zoom),
+            projection::get().toPointWorldCoord(bottom_right_point_px, controller_zoom));
     }
 
     bool GeometryPoint::touches(const Geometry* geometry, const int& controller_zoom) const
@@ -83,7 +91,9 @@ namespace qmapcontrol
                 case GeometryType::GeometryWidget:
                 {
                     // Check if the bounding boxes intersect.
-                    if(geometry->boundingBox(controller_zoom).rawRect().intersects(boundingBox(controller_zoom).rawRect()))
+                    if(geometry->boundingBox(controller_zoom)
+                           .rawRect()
+                           .intersects(boundingBox(controller_zoom).rawRect()))
                     {
                         // Set that we have touched.
                         return_touches = true;
@@ -95,7 +105,11 @@ namespace qmapcontrol
                 case GeometryType::GeometryPolygon:
                 {
                     // Check if the poylgon intersects with our bounding box.
-                    if(static_cast<const GeometryPolygon*>(geometry)->toQPolygonF().intersected(boundingBox(controller_zoom).rawRect()).empty() == false)
+                    if(static_cast<const GeometryPolygon*>(geometry)
+                           ->toQPolygonF()
+                           .intersected(boundingBox(controller_zoom).rawRect())
+                           .empty()
+                       == false)
                     {
                         // Set that we have touched.
                         return_touches = true;
@@ -118,7 +132,9 @@ namespace qmapcontrol
         return return_touches;
     }
 
-    void GeometryPoint::draw(QPainter& painter, const RectWorldCoord& backbuffer_rect_coord, const int& controller_zoom)
+    void GeometryPoint::draw(QPainter& painter,
+                             const RectWorldCoord& backbuffer_rect_coord,
+                             const int& controller_zoom)
     {
         // Check the geometry is visible.
         if(isVisible(controller_zoom))
@@ -127,7 +143,8 @@ namespace qmapcontrol
             if(backbuffer_rect_coord.rawRect().contains(m_point_coord.rawPoint()))
             {
                 // Calculate the point in pixels.
-                const PointWorldPx point_px(projection::get().toPointWorldPx(m_point_coord, controller_zoom));
+                const PointWorldPx point_px(
+                    projection::get().toPointWorldPx(m_point_coord, controller_zoom));
 
                 // Set the pen to use.
                 painter.setPen(pen());
@@ -136,15 +153,19 @@ namespace qmapcontrol
                 painter.drawPoint(point_px.rawPoint());
 
                 // Do we have a meta-data value and should we display it at this zoom?
-                if(controller_zoom >= m_metadata_displayed_zoom_minimum && metadata(m_metadata_displayed_key).isNull() == false)
+                if(controller_zoom >= m_metadata_displayed_zoom_minimum
+                   && metadata(m_metadata_displayed_key).isNull() == false)
                 {
                     /// @todo calculate correct alignment for metadata displayed offset.
 
                     // Draw the text next to the point with an offset.
-                    painter.drawText((point_px + PointPx(m_metadata_displayed_alignment_offset_px, -m_metadata_displayed_alignment_offset_px)).rawPoint(), metadata(m_metadata_displayed_key).toString());
+                    painter.drawText((point_px
+                                      + PointPx(m_metadata_displayed_alignment_offset_px,
+                                                -m_metadata_displayed_alignment_offset_px))
+                                         .rawPoint(),
+                                     metadata(m_metadata_displayed_key).toString());
                 }
             }
         }
     }
-
 }

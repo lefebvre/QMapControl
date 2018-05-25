@@ -14,8 +14,8 @@
 #include <QMapControl/LayerGeometry.h>
 #include <QMapControl/LayerMapAdapter.h>
 #include <QMapControl/MapAdapterGoogle.h>
-#include <QMapControl/MapAdapterYahoo.h>
 #include <QMapControl/MapAdapterWMS.h>
+#include <QMapControl/MapAdapterYahoo.h>
 
 /*!
  * This is a bit complexer application, which lets you play around.
@@ -23,13 +23,13 @@
  *  - Add Point: adds a Point to the coordinate you click (this point will be clickable).
  *  - Drag Rect: lets to drag a rectangular into which will be zoomed in.
  *  - Move To Click: moves the view middle to the clicked coordinate.
- *  - GPS: starts a "pseudo" GPS receiver which emits new positions, these are connected to the GeometryPointImage.
+ *  - GPS: starts a "pseudo" GPS receiver which emits new positions, these are connected to the
+ * GeometryPointImage.
  *  - Follow Geom: Follows the ImagePoint, when it moves because of new GPS positions.
  *
  * A "mini" map lets you see where you are. You can even click on it to change your position.
  */
-Multidemo::Multidemo(QWidget* parent)
-    : QWidget(parent)
+Multidemo::Multidemo(QWidget* parent) : QWidget(parent)
 {
     // Setup the maps.
     setupMaps();
@@ -37,9 +37,11 @@ Multidemo::Multidemo(QWidget* parent)
     // Setup the layout
     setupLayout();
 
-    // Create the GPS Modul and connect the appropriate signal/slot to update the associated GeometryPointImage position.
+    // Create the GPS Modul and connect the appropriate signal/slot to update the associated
+    // GeometryPointImage position.
     m_gps_modul = new GPS_Modul();
-    QObject::connect(m_gps_modul, &GPS_Modul::positionChanged, m_gps_point.get(), &GeometryPointImage::setCoord);
+    QObject::connect(m_gps_modul, &GPS_Modul::positionChanged, m_gps_point.get(),
+                     &GeometryPointImage::setCoord);
 }
 
 void Multidemo::setupMaps()
@@ -55,20 +57,23 @@ void Multidemo::setupMaps()
     m_map_control->enableZoomControls(true, false);
 
     // Create a base map adapter to use.
-//    std::set<projection::EPSG> wms_projections;
-//    wms_projections.insert(projection::EPSG::Equirectangular);
-//    std::shared_ptr<MapAdapter> map_adapter(std::make_shared<MapAdapterWMS>(QUrl("http://www2.demis.nl/wms/wms.asp?wms=WorldMap&LAYERS=Countries,Borders,Cities,Rivers,Settlements,Hillshading,Waterbodies,Railroads,Highways,Roads&FORMAT=image/png&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetMap&STYLES=&EXCEPTIONS=application/vnd.ogc.se_inimage&SRS=EPSG:4326&TRANSPARENT=FALSE"), wms_projections));
-//    std::shared_ptr<MapAdapter> map_adapter(std::make_shared<MapAdapterOSM>());
-//    std::shared_ptr<MapAdapter> map_adapter(std::make_shared<MapAdapterYahoo>());
-    std::shared_ptr<MapAdapter> map_adapter(std::make_shared<MapAdapterGoogle>(MapAdapterGoogle::GoogleLayerType::MAPS));
+    //    std::set<projection::EPSG> wms_projections;
+    //    wms_projections.insert(projection::EPSG::Equirectangular);
+    //    std::shared_ptr<MapAdapter>
+    //    map_adapter(std::make_shared<MapAdapterWMS>(QUrl("http://www2.demis.nl/wms/wms.asp?wms=WorldMap&LAYERS=Countries,Borders,Cities,Rivers,Settlements,Hillshading,Waterbodies,Railroads,Highways,Roads&FORMAT=image/png&VERSION=1.1.1&SERVICE=WMS&REQUEST=GetMap&STYLES=&EXCEPTIONS=application/vnd.ogc.se_inimage&SRS=EPSG:4326&TRANSPARENT=FALSE"),
+    //    wms_projections)); std::shared_ptr<MapAdapter>
+    //    map_adapter(std::make_shared<MapAdapterOSM>()); std::shared_ptr<MapAdapter>
+    //    map_adapter(std::make_shared<MapAdapterYahoo>());
+    std::shared_ptr<MapAdapter> map_adapter(
+        std::make_shared<MapAdapterGoogle>(MapAdapterGoogle::GoogleLayerType::MAPS));
 
     // Create/add a layer with the selected map adapter.
     m_map_control->addLayer(std::make_shared<LayerMapAdapter>("Map Layer", map_adapter));
 
     // Create a layer to store geometries.
-    std::shared_ptr<LayerGeometry> layer_geometries(std::make_shared<LayerGeometry>("Geometry Layer"));
+    std::shared_ptr<LayerGeometry> layer_geometries(
+        std::make_shared<LayerGeometry>("Geometry Layer"));
     m_map_control->addLayer(layer_geometries);
-
 
     // Create a "mini" QMapControl.
     m_mini_map_control = new QMapControl(QSizeF(150.0, 150.0));
@@ -83,18 +88,20 @@ void Multidemo::setupMaps()
     // Create/add a layer with the selected map adapter for the "mini" QMapControl.
     m_mini_map_control->addLayer(std::make_shared<LayerMapAdapter>("Mini Map Layer", map_adapter));
 
-
     // Create some GeometryPoints to add to a GeometryLineString.
     QPen pen(QColor(255, 0, 0, 100));
     pen.setWidth(2);
     std::vector<std::shared_ptr<GeometryPoint>> points;
-    points.emplace_back(std::make_shared<GeometryPointCircle>(PointWorldCoord(8.259959, 50.001781)));
+    points.emplace_back(
+        std::make_shared<GeometryPointCircle>(PointWorldCoord(8.259959, 50.001781)));
     points.back()->setPen(pen);
     points.back()->setMetadata("name", "Mainz, Hauptbahnhof");
-    points.emplace_back(std::make_shared<GeometryPointCircle>(PointWorldCoord(8.263758, 49.998917)));
+    points.emplace_back(
+        std::make_shared<GeometryPointCircle>(PointWorldCoord(8.263758, 49.998917)));
     points.back()->setPen(pen);
     points.back()->setMetadata("name", "Mainz, Münsterplatz");
-    points.emplace_back(std::make_shared<GeometryPointCircle>(PointWorldCoord(8.265812, 50.001952)));
+    points.emplace_back(
+        std::make_shared<GeometryPointCircle>(PointWorldCoord(8.265812, 50.001952)));
     points.back()->setPen(pen);
     points.back()->setMetadata("name", "Mainz, Neubrunnenplatz");
     points.emplace_back(std::make_shared<GeometryPointCircle>(PointWorldCoord(8.2688, 50.004015)));
@@ -106,22 +113,28 @@ void Multidemo::setupMaps()
     points.emplace_back(std::make_shared<GeometryPointCircle>(PointWorldCoord(8.272845, 50.00495)));
     points.back()->setPen(pen);
     points.back()->setMetadata("name", "Mainz, Brückenplatz");
-    points.emplace_back(std::make_shared<GeometryPointCircle>(PointWorldCoord(8.280349, 50.008173)));
+    points.emplace_back(
+        std::make_shared<GeometryPointCircle>(PointWorldCoord(8.280349, 50.008173)));
     points.back()->setPen(pen);
     points.back()->setMetadata("name", "Mainz, Brückenkopf");
-    points.emplace_back(std::make_shared<GeometryPointCircle>(PointWorldCoord(8.273573, 50.016315)));
+    points.emplace_back(
+        std::make_shared<GeometryPointCircle>(PointWorldCoord(8.273573, 50.016315)));
     points.back()->setPen(pen);
     points.back()->setMetadata("name", "Wiesbaden-Mainz-Kastel, Eleonorenstraße");
-    points.emplace_back(std::make_shared<GeometryPointCircle>(PointWorldCoord(8.275145, 50.016992)));
+    points.emplace_back(
+        std::make_shared<GeometryPointCircle>(PointWorldCoord(8.275145, 50.016992)));
     points.back()->setPen(pen);
     points.back()->setMetadata("name", "Wiesbaden-Mainz-Kastel, Johannes-Goßner-Straße");
-    points.emplace_back(std::make_shared<GeometryPointCircle>(PointWorldCoord(8.270476, 50.021426)));
+    points.emplace_back(
+        std::make_shared<GeometryPointCircle>(PointWorldCoord(8.270476, 50.021426)));
     points.back()->setPen(pen);
     points.back()->setMetadata("name", "Wiesbaden-Mainz-Kastel, Ruthof");
-    points.emplace_back(std::make_shared<GeometryPointCircle>(PointWorldCoord(8.266445, 50.025913)));
+    points.emplace_back(
+        std::make_shared<GeometryPointCircle>(PointWorldCoord(8.266445, 50.025913)));
     points.back()->setPen(pen);
     points.back()->setMetadata("name", "Wiesbaden-Mainz-Kastel, Mudra Kaserne");
-    points.emplace_back(std::make_shared<GeometryPointCircle>(PointWorldCoord(8.260378, 50.030345)));
+    points.emplace_back(
+        std::make_shared<GeometryPointCircle>(PointWorldCoord(8.260378, 50.030345)));
     points.back()->setPen(pen);
     points.back()->setMetadata("name", "Wiesbaden-Mainz-Amoneburg, Dyckerhoffstraße");
 
@@ -139,49 +152,55 @@ void Multidemo::setupMaps()
         // Also add the point to the custom layer.
         layer_geometries->addGeometry(point);
     }
-    std::shared_ptr<GeometryLineString> line_string(std::make_shared<GeometryLineString>(raw_points));
+    std::shared_ptr<GeometryLineString> line_string(
+        std::make_shared<GeometryLineString>(raw_points));
     line_string->setPen(pen);
     line_string->setMetadata("name", "Busline 54");
 
     // Add the GeoemtryLineString to the Geometry layer.
     layer_geometries->addGeometry(line_string);
 
-
     // Create a GPS GeometryPoint that can dynamically move, and add it to the geometry layer.
-    m_gps_point = std::make_shared<GeometryPointImage>(PointWorldCoord(0.0, 0.0), ":/resources/images/marker1.png");
+    m_gps_point = std::make_shared<GeometryPointImage>(PointWorldCoord(0.0, 0.0),
+                                                       ":/resources/images/marker1.png");
     m_gps_point->setAlignmentType(GeometryPoint::AlignmentType::TopRight);
     m_gps_point->setMetadata("name", "image point");
     layer_geometries->addGeometry(m_gps_point);
 
-
     // Create a GeometryArrow with a heading set.
-    std::shared_ptr<GeometryPointArrow> arrow_point(std::make_shared<GeometryPointArrow>(PointWorldCoord(-20.0, 20.0), QSizeF(15.0, 15.0)));
+    std::shared_ptr<GeometryPointArrow> arrow_point(
+        std::make_shared<GeometryPointArrow>(PointWorldCoord(-20.0, 20.0), QSizeF(15.0, 15.0)));
     arrow_point->setPen(QPen(Qt::red));
     arrow_point->setRotation(92.4);
     layer_geometries->addGeometry(arrow_point);
 
-
     // Create a GeometryPoint with a PushButton widget.
     QPushButton* pb = new QPushButton("test button", m_map_control);
-    std::shared_ptr<GeometryWidget> widget_point(std::make_shared<GeometryWidget>(PointWorldCoord(-20.0, -20.0), pb));
+    std::shared_ptr<GeometryWidget> widget_point(
+        std::make_shared<GeometryWidget>(PointWorldCoord(-20.0, -20.0), pb));
     widget_point->setAlignmentType(GeometryPoint::AlignmentType::TopLeft);
     widget_point->setMetadata("name", ".");
     widget_point->setBaseZoom(3);
     layer_geometries->addGeometry(widget_point);
 
-
     // Connect the signal/slots are required.
     // Signal/slot to manage geometries being clicked.
-    QObject::connect(m_map_control, &QMapControl::geometryClicked, this, &Multidemo::geometryClickEvent);
+    QObject::connect(m_map_control, &QMapControl::geometryClicked, this,
+                     &Multidemo::geometryClickEvent);
     // Signal/slot to manage geometries being selected.
-    QObject::connect(m_map_control, &QMapControl::geometriesSelected, this, &Multidemo::geometriesSelectedEvent);
+    QObject::connect(m_map_control, &QMapControl::geometriesSelected, this,
+                     &Multidemo::geometriesSelectedEvent);
     // Signal/slot to manage main map control mouse press events.
-    QObject::connect(m_map_control, &QMapControl::mouseEventPressCoordinate, this, &Multidemo::main_mouseEventPressCoordinate);
+    QObject::connect(m_map_control, &QMapControl::mouseEventPressCoordinate, this,
+                     &Multidemo::main_mouseEventPressCoordinate);
     // Signal/slot to manage main map control mouse release events.
-    QObject::connect(m_map_control, &QMapControl::mouseEventMoveCoordinate, this, &Multidemo::main_mouseEventReleaseCoordinate);
-    QObject::connect(m_map_control, &QMapControl::mouseEventReleaseCoordinate, this, &Multidemo::main_mouseEventReleaseCoordinate);
+    QObject::connect(m_map_control, &QMapControl::mouseEventMoveCoordinate, this,
+                     &Multidemo::main_mouseEventReleaseCoordinate);
+    QObject::connect(m_map_control, &QMapControl::mouseEventReleaseCoordinate, this,
+                     &Multidemo::main_mouseEventReleaseCoordinate);
     // Signal/slot to manage "mini" map control mouse press events.
-    QObject::connect(m_mini_map_control, &QMapControl::mouseEventPressCoordinate, this, &Multidemo::mini_mouseEventPressCoordinate);
+    QObject::connect(m_mini_map_control, &QMapControl::mouseEventPressCoordinate, this,
+                     &Multidemo::mini_mouseEventPressCoordinate);
 }
 
 void Multidemo::setupLayout()
@@ -228,7 +247,6 @@ void Multidemo::setupLayout()
     m_button_move_click->setFocusPolicy(Qt::NoFocus);
     m_button_follow_gps->setFocusPolicy(Qt::NoFocus);
     m_button_gps->setFocusPolicy(Qt::NoFocus);
-
 
     // Create an inner layout to display buttons/"mini" map control.
     QVBoxLayout* layout_inner = new QVBoxLayout;
@@ -351,7 +369,8 @@ void Multidemo::toggleFollowGPS(bool enable)
     }
 }
 
-void Multidemo::geometriesSelectedEvent(std::map<std::string, std::vector<std::shared_ptr<Geometry>>> selected_geometries)
+void Multidemo::geometriesSelectedEvent(
+    std::map<std::string, std::vector<std::shared_ptr<Geometry>>> selected_geometries)
 {
     // Loop through the layers.
     for(const auto& layers : selected_geometries)
@@ -371,11 +390,13 @@ void Multidemo::geometryClickEvent(const Geometry* geometry)
     if(geometry->geometryType() == Geometry::GeometryType::GeometryPoint)
     {
         // Display a message box with the point's details.
-        QMessageBox::information(this, geometry->metadata("name").toString(), geometry->metadata("name").toString());
+        QMessageBox::information(this, geometry->metadata("name").toString(),
+                                 geometry->metadata("name").toString());
     }
 }
 
-void Multidemo::main_mouseEventPressCoordinate(QMouseEvent* mouse_event, PointWorldCoord press_coordinate)
+void Multidemo::main_mouseEventPressCoordinate(QMouseEvent* mouse_event,
+                                               PointWorldCoord press_coordinate)
 {
     // Was there a left mouse button press?
     if(mouse_event->button() == Qt::MouseButton::LeftButton)
@@ -392,18 +413,23 @@ void Multidemo::main_mouseEventPressCoordinate(QMouseEvent* mouse_event, PointWo
         if(m_button_add_point->isChecked())
         {
             // Add a GeometryPointCircle with a radius of 10.0 pixels.
-            std::static_pointer_cast<LayerGeometry>(m_map_control->getLayer("Geometry Layer"))->addGeometry(std::make_shared<GeometryPointCircle>(press_coordinate, QSizeF(10.0, 10.0)));
+            std::static_pointer_cast<LayerGeometry>(m_map_control->getLayer("Geometry Layer"))
+                ->addGeometry(
+                    std::make_shared<GeometryPointCircle>(press_coordinate, QSizeF(10.0, 10.0)));
         }
     }
 }
 
-void Multidemo::main_mouseEventReleaseCoordinate(QMouseEvent* /*mouse_event*/, PointWorldCoord /*press_coordinate*/, PointWorldCoord /*release_coordinate*/)
+void Multidemo::main_mouseEventReleaseCoordinate(QMouseEvent* /*mouse_event*/,
+                                                 PointWorldCoord /*press_coordinate*/,
+                                                 PointWorldCoord /*release_coordinate*/)
 {
     // Update the location of the "mini" map control.
     m_mini_map_control->setMapFocusPoint(m_map_control->mapFocusPointCoord());
 }
 
-void Multidemo::mini_mouseEventPressCoordinate(QMouseEvent* mouse_event, PointWorldCoord press_coordinate)
+void Multidemo::mini_mouseEventPressCoordinate(QMouseEvent* mouse_event,
+                                               PointWorldCoord press_coordinate)
 {
     // Was there a left mouse button press?
     if(mouse_event->button() == Qt::MouseButton::LeftButton)

@@ -1,27 +1,27 @@
 /*
-*
-* This file is part of QMapControl,
-* an open-source cross-platform map widget
-*
-* Copyright (C) 2007 - 2008 Kai Winter
-*
-* This program is free software: you can redistribute it and/or modify
-* it under the terms of the GNU Lesser General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU Lesser General Public License for more details.
-*
-* You should have received a copy of the GNU Lesser General Public License
-* along with QMapControl. If not, see <http://www.gnu.org/licenses/>.
-*
-* Contact e-mail: kaiwinter@gmx.de
-* Program URL   : http://qmapcontrol.sourceforge.net/
-*
-*/
+ *
+ * This file is part of QMapControl,
+ * an open-source cross-platform map widget
+ *
+ * Copyright (C) 2007 - 2008 Kai Winter
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with QMapControl. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Contact e-mail: kaiwinter@gmx.de
+ * Program URL   : http://qmapcontrol.sourceforge.net/
+ *
+ */
 
 #include "ImageManager.h"
 
@@ -71,9 +71,12 @@ namespace qmapcontrol
 
         // Connect signal/slot for image downloads.
         QObject::connect(this, &ImageManager::downloadImage, &m_nm, &NetworkManager::downloadImage);
-        QObject::connect(&m_nm, &NetworkManager::imageDownloaded, this, &ImageManager::imageDownloaded);
-        QObject::connect(&m_nm, &NetworkManager::downloadingInProgress, this, &ImageManager::downloadingInProgress);
-        QObject::connect(&m_nm, &NetworkManager::downloadingFinished, this, &ImageManager::downloadingFinished);
+        QObject::connect(&m_nm, &NetworkManager::imageDownloaded, this,
+                         &ImageManager::imageDownloaded);
+        QObject::connect(&m_nm, &NetworkManager::downloadingInProgress, this,
+                         &ImageManager::downloadingInProgress);
+        QObject::connect(&m_nm, &NetworkManager::downloadingFinished, this,
+                         &ImageManager::downloadingFinished);
     }
 
     int ImageManager::tileSizePx() const
@@ -118,7 +121,8 @@ namespace qmapcontrol
         else
         {
             // Log error.
-            qDebug() << "Unable to create directory for persistent cache '" << path.absolutePath() << "'";
+            qDebug() << "Unable to create directory for persistent cache '" << path.absolutePath()
+                     << "'";
         }
 
         // Return success.
@@ -235,7 +239,12 @@ namespace qmapcontrol
     QString ImageManager::md5hex(const QUrl& url)
     {
         // Return the md5 hex value of the given url at a specific projection and tile size.
-        return QString(QCryptographicHash::hash((url.toString() + QString::number(projection::get().epsg()) + QString::number(m_tile_size_px)).toUtf8(), QCryptographicHash::Md5).toHex());
+        return QString(
+            QCryptographicHash::hash((url.toString() + QString::number(projection::get().epsg())
+                                      + QString::number(m_tile_size_px))
+                                         .toUtf8(),
+                                     QCryptographicHash::Md5)
+                .toHex());
     }
 
     QString ImageManager::persistentCacheFilename(const QUrl& url)
@@ -261,13 +270,17 @@ namespace qmapcontrol
             // Is the persistent cache expiry set, and if so is the file older than the expiry time
             // allowed?
             if(m_persistent_cache_expiry.count() > 0
-               && file_info.lastModified().msecsTo(QDateTime::currentDateTime()) > std::chrono::duration_cast<std::chrono::milliseconds>(m_persistent_cache_expiry).count())
+               && file_info.lastModified().msecsTo(QDateTime::currentDateTime())
+                      > std::chrono::duration_cast<std::chrono::milliseconds>(
+                            m_persistent_cache_expiry)
+                            .count())
             {
                 // The file is too old, remove it.
                 m_persistent_cache_directory.remove(file.fileName());
 
                 // Log removing the file.
-                qDebug() << "Removing '" << file.fileName() << "' from persistent cache for url '" << url << "'";
+                qDebug() << "Removing '" << file.fileName() << "' from persistent cache for url '"
+                         << url << "'";
             }
             else
             {

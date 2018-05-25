@@ -5,11 +5,11 @@
 #include <QtWidgets/QMainWindow>
 
 // QMapControl includes.
-#include <QMapControl/QMapControl.h>
 #include <QMapControl/GeometryLineString.h>
 #include <QMapControl/GeometryWidget.h>
 #include <QMapControl/Layer.h>
 #include <QMapControl/LayerGeometry.h>
+#include <QMapControl/QMapControl.h>
 
 // Local includes.
 #include "dialogs.h"
@@ -20,7 +20,7 @@ using namespace qmapcontrol;
  * @author Kai Winter <kaiwinter@gmx.de>
  * @author Chris Stylianou <chris5287@gmail.com>
  */
-class Citymap: public QMainWindow
+class Citymap : public QMainWindow
 {
     Q_OBJECT
 public:
@@ -32,13 +32,14 @@ public:
     Citymap(QWidget* parent = 0);
 
     //! Disable copy constructor.
-    ///Citymap(const Citymap&) = delete; @todo re-add once MSVC supports default/delete syntax.
+    /// Citymap(const Citymap&) = delete; @todo re-add once MSVC supports default/delete syntax.
 
     //! Disable copy assignment.
-    ///Citymap& operator=(const Citymap&) = delete; @todo re-add once MSVC supports default/delete syntax.
+    /// Citymap& operator=(const Citymap&) = delete; @todo re-add once MSVC supports default/delete
+    /// syntax.
 
     //! Destructor.
-    ~Citymap() { } /// = default; @todo re-add once MSVC supports default/delete syntax.
+    ~Citymap() {} /// = default; @todo re-add once MSVC supports default/delete syntax.
 
 private:
     /*!

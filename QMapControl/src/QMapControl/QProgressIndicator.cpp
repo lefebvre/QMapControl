@@ -1,24 +1,24 @@
 /*
-*
-* This file is part of QProgressIndicator,
-* an open-source recent files menu widget
-*
-* Copyright (C) 2009 - 2010 Morgan Leborgne
-*
-* This program is free software: you can redistribute it and/or modify
-* it under the terms of the GNU Lesser General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU Lesser General Public License for more details.
-*
-* You should have received a copy of the GNU Lesser General Public License
-* along with QProgressIndicator. If not, see <http://www.gnu.org/licenses/>.
-*
-*/
+ *
+ * This file is part of QProgressIndicator,
+ * an open-source recent files menu widget
+ *
+ * Copyright (C) 2009 - 2010 Morgan Leborgne
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with QProgressIndicator. If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
 #include "QProgressIndicator.h"
 
 #include <QPainter>
@@ -54,7 +54,7 @@ bool QProgressIndicator::isDisplayedWhenStopped() const
     return m_always_visible;
 }
 
-const QColor & QProgressIndicator::color() const
+const QColor& QProgressIndicator::color() const
 {
     // Return the color.
     return m_color;
@@ -165,7 +165,7 @@ void QProgressIndicator::paintEvent(QPaintEvent* /*event*/)
 
         // Calculate the capsule dimensions.
         const int capsule_height = radius_outer - radius_inner;
-        const int capsule_width  = (width > 32 ) ? capsule_height * 0.23 : capsule_height * 0.35;
+        const int capsule_width = (width > 32) ? capsule_height * 0.23 : capsule_height * 0.35;
         const int capsule_radius = capsule_width / 2.0;
 
         // Loop and create the progress capsule indicators.
@@ -173,7 +173,7 @@ void QProgressIndicator::paintEvent(QPaintEvent* /*event*/)
         {
             // Set the painter's brush color.
             QColor color = m_color;
-            color.setAlphaF(1.0f - (i/12.0f));
+            color.setAlphaF(1.0f - (i / 12.0f));
             painter.setPen(Qt::NoPen);
             painter.setBrush(color);
 
@@ -185,7 +185,8 @@ void QProgressIndicator::paintEvent(QPaintEvent* /*event*/)
             painter.rotate(m_angle - i * 30.0f);
 
             // Draw the progress capsule indicator.
-            painter.drawRoundedRect(-capsule_width * 0.5, -(radius_inner + capsule_height), capsule_width, capsule_height, capsule_radius, capsule_radius);
+            painter.drawRoundedRect(-capsule_width * 0.5, -(radius_inner + capsule_height),
+                                    capsule_width, capsule_height, capsule_radius, capsule_radius);
 
             // Restore the painter's previous state.
             painter.restore();

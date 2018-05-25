@@ -25,13 +25,14 @@ public:
     Mapviewer(QWidget* parent = 0);
 
     //! Disable copy constructor.
-    ///Mapviewer(const Mapviewer&) = delete; @todo re-add once MSVC supports default/delete syntax.
+    /// Mapviewer(const Mapviewer&) = delete; @todo re-add once MSVC supports default/delete syntax.
 
     //! Disable copy assignment.
-    ///Mapviewer& operator=(const Mapviewer&) = delete; @todo re-add once MSVC supports default/delete syntax.
+    /// Mapviewer& operator=(const Mapviewer&) = delete; @todo re-add once MSVC supports
+    /// default/delete syntax.
 
     //! Destructor.
-    ~Mapviewer() { } /// = default; @todo re-add once MSVC supports default/delete syntax.
+    ~Mapviewer() {} /// = default; @todo re-add once MSVC supports default/delete syntax.
 
 private:
     /**
@@ -43,5 +44,4 @@ private:
 private:
     /// The main map control.
     QMapControl* m_map_control;
-
 };

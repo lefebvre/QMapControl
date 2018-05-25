@@ -8,22 +8,30 @@
 
 namespace qmapcontrol
 {
-    GeometryPointShapeScaled::GeometryPointShapeScaled(const qreal& longitude, const qreal& latitude, const QSizeF& base_size_px, const int& base_zoom, const int& zoom_minimum, const int& zoom_maximum)
-        : GeometryPointShape(PointWorldCoord(longitude, latitude), base_size_px, zoom_minimum, zoom_maximum),
+    GeometryPointShapeScaled::GeometryPointShapeScaled(const qreal& longitude,
+                                                       const qreal& latitude,
+                                                       const QSizeF& base_size_px,
+                                                       const int& base_zoom,
+                                                       const int& zoom_minimum,
+                                                       const int& zoom_maximum)
+        : GeometryPointShape(
+              PointWorldCoord(longitude, latitude), base_size_px, zoom_minimum, zoom_maximum),
           m_base_zoom(base_zoom),
           m_draw_minimum_px(-1.0, -1.0),
           m_draw_maximum_px(-1.0, -1.0)
     {
-
     }
 
-    GeometryPointShapeScaled::GeometryPointShapeScaled(const PointWorldCoord& point_coord, const QSizeF& base_size_px, const int& base_zoom, const int& zoom_minimum, const int& zoom_maximum)
+    GeometryPointShapeScaled::GeometryPointShapeScaled(const PointWorldCoord& point_coord,
+                                                       const QSizeF& base_size_px,
+                                                       const int& base_zoom,
+                                                       const int& zoom_minimum,
+                                                       const int& zoom_maximum)
         : GeometryPointShape(point_coord, base_size_px, zoom_minimum, zoom_maximum),
           m_base_zoom(base_zoom),
           m_draw_minimum_px(-1.0, -1.0),
           m_draw_maximum_px(-1.0, -1.0)
     {
-
     }
 
     const int& GeometryPointShapeScaled::baseZoom() const
@@ -80,13 +88,17 @@ namespace qmapcontrol
         const QSizeF object_size_px(calculateGeometrySizePx(controller_zoom));
 
         // Calculate the top-left point.
-        const PointWorldPx top_left_point_px(calculateTopLeftPoint(point_px, alignmentType(), object_size_px));
+        const PointWorldPx top_left_point_px(
+            calculateTopLeftPoint(point_px, alignmentType(), object_size_px));
 
         // Calculate the bottom-right point.
-        const PointWorldPx bottom_right_point_px(top_left_point_px.x() + object_size_px.width(), top_left_point_px.y() + object_size_px.height());
+        const PointWorldPx bottom_right_point_px(top_left_point_px.x() + object_size_px.width(),
+                                                 top_left_point_px.y() + object_size_px.height());
 
         // Return the converted coord points.
-        return RectWorldCoord(projection::get().toPointWorldCoord(top_left_point_px, controller_zoom), projection::get().toPointWorldCoord(bottom_right_point_px, controller_zoom));
+        return RectWorldCoord(
+            projection::get().toPointWorldCoord(top_left_point_px, controller_zoom),
+            projection::get().toPointWorldCoord(bottom_right_point_px, controller_zoom));
     }
 
     const QSizeF GeometryPointShapeScaled::calculateGeometrySizePx(const int& controller_zoom) const
@@ -108,33 +120,36 @@ namespace qmapcontrol
             if(m_draw_minimum_px.height() > -1.0)
             {
                 // Take the highest height.
-                return_size_px.setHeight(std::max(return_size_px.height(), m_draw_minimum_px.height()));
+                return_size_px.setHeight(
+                    std::max(return_size_px.height(), m_draw_minimum_px.height()));
             }
 
             // Do we have a minimum width draw size set?
             if(m_draw_minimum_px.width() > -1.0)
             {
                 // Take the highest width.
-                return_size_px.setWidth(std::max(return_size_px.width(), m_draw_minimum_px.width()));
+                return_size_px.setWidth(
+                    std::max(return_size_px.width(), m_draw_minimum_px.width()));
             }
 
             // Do we have a maximum height draw size set?
             if(m_draw_maximum_px.height() > -1.0)
             {
                 // Take the lowest height.
-                return_size_px.setHeight(std::min(return_size_px.height(), m_draw_maximum_px.height()));
+                return_size_px.setHeight(
+                    std::min(return_size_px.height(), m_draw_maximum_px.height()));
             }
 
             // Do we have a maximum width draw size set?
             if(m_draw_maximum_px.width() > -1.0)
             {
                 // Take the lowest width.
-                return_size_px.setWidth(std::min(return_size_px.width(), m_draw_maximum_px.width()));
+                return_size_px.setWidth(
+                    std::min(return_size_px.width(), m_draw_maximum_px.width()));
             }
         }
 
         // Return the size.
         return return_size_px;
     }
-
 }

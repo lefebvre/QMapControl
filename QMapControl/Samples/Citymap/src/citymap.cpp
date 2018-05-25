@@ -11,9 +11,9 @@
 #include <QMapControl/GeometryPointImageScaled.h>
 #include <QMapControl/GeometryWidget.h>
 #include <QMapControl/LayerMapAdapter.h>
+#include <QMapControl/MapAdapterGoogle.h>
 #include <QMapControl/MapAdapterOSM.h>
 #include <QMapControl/MapAdapterYahoo.h>
-#include <QMapControl/MapAdapterGoogle.h>
 
 /*!
  * This demo application shows more features of the QMapControl.
@@ -37,10 +37,14 @@ Citymap::Citymap(QWidget* parent)
     setCentralWidget(m_map_control);
 
     // Create/add a layer with the default OSM map adapter.
-    m_map_control->addLayer(std::make_shared<LayerMapAdapter>("Map", std::make_shared<MapAdapterOSM>()));
+    m_map_control->addLayer(
+        std::make_shared<LayerMapAdapter>("Map", std::make_shared<MapAdapterOSM>()));
 
     // Create a layer for the Yahoo streets overlay (hide it by default).
-    m_layer_yahoo_streets = std::make_shared<LayerMapAdapter>("Yahoo: Street Overlay", std::make_shared<MapAdapterYahoo>(QUrl("http://us.maps3.yimg.com/aerial.maps.yimg.com/png?v=2.2&t=h&s=256&x=%x&y=%y&z=%zoom")));
+    m_layer_yahoo_streets = std::make_shared<LayerMapAdapter>(
+        "Yahoo: Street Overlay",
+        std::make_shared<MapAdapterYahoo>(QUrl("http://us.maps3.yimg.com/aerial.maps.yimg.com/"
+                                               "png?v=2.2&t=h&s=256&x=%x&y=%y&z=%zoom")));
     m_layer_yahoo_streets->setVisible(false);
     m_map_control->addLayer(m_layer_yahoo_streets);
 
@@ -59,7 +63,8 @@ Citymap::Citymap(QWidget* parent)
     createMenus();
 
     // Add signal/slot to connect notes layer to edit method.
-    QObject::connect(m_layer_notes.get(), &LayerGeometry::geometryClicked, this, &Citymap::editNote);
+    QObject::connect(m_layer_notes.get(), &LayerGeometry::geometryClicked, this,
+                     &Citymap::editNote);
 
     // Set the map focus and zoom to Mainz.
     m_map_control->setMapFocusPoint(PointWorldCoord(8.26, 50.0));
@@ -67,7 +72,7 @@ Citymap::Citymap(QWidget* parent)
 
     // Create a text edit geometry widget (and hide for now).
     m_text_edit = new QTextEdit(m_map_control);
-    m_text_edit->setGeometry(0,0,200,100);
+    m_text_edit->setGeometry(0, 0, 200, 100);
     m_geometry_text_edit = std::make_shared<GeometryWidget>(PointWorldCoord(0.0, 0.0), m_text_edit);
     m_geometry_text_edit->setAlignmentType(GeometryPoint::AlignmentType::TopLeft);
     m_geometry_text_edit->setVisible(false);
@@ -81,22 +86,26 @@ void Citymap::addSights()
     m_map_control->addLayer(m_layer_sights);
 
     // Create the "Mainzer Dom" sight and add it to the layer.
-    std::shared_ptr<GeometryPoint> dom(std::make_shared<GeometryPointImageScaled>(PointWorldCoord(8.274167, 49.998889), ":/resources/images/180-dom.jpg", 17));
+    std::shared_ptr<GeometryPoint> dom(std::make_shared<GeometryPointImageScaled>(
+        PointWorldCoord(8.274167, 49.998889), ":/resources/images/180-dom.jpg", 17));
     dom->setMetadata("name", "Mainzer Dom");
     m_layer_sights->addGeometry(dom);
 
     // Create the "St. Stephan" sight and add it to the layer.
-    std::shared_ptr<GeometryPoint> stephan(std::make_shared<GeometryPointImageScaled>(PointWorldCoord(8.268611, 49.995556), ":/resources/images/180-stephan.jpg", 17));
+    std::shared_ptr<GeometryPoint> stephan(std::make_shared<GeometryPointImageScaled>(
+        PointWorldCoord(8.268611, 49.995556), ":/resources/images/180-stephan.jpg", 17));
     stephan->setMetadata("name", "St. Stephan");
     m_layer_sights->addGeometry(stephan);
 
     // Create the "St. Quintin" sight and add it to the layer.
-    std::shared_ptr<GeometryPoint> quitin(std::make_shared<GeometryPointImageScaled>(PointWorldCoord(8.272222, 50.000833), ":/resources/images/180-quintin.jpg", 17));
+    std::shared_ptr<GeometryPoint> quitin(std::make_shared<GeometryPointImageScaled>(
+        PointWorldCoord(8.272222, 50.000833), ":/resources/images/180-quintin.jpg", 17));
     quitin->setMetadata("name", "St. Quintin");
     m_layer_sights->addGeometry(quitin);
 
     // Connect signal/slot to handle sights being clicked.
-    QObject::connect(m_layer_sights.get(), &LayerGeometry::geometryClicked, this, &Citymap::geometryClicked);
+    QObject::connect(m_layer_sights.get(), &LayerGeometry::geometryClicked, this,
+                     &Citymap::geometryClicked);
 }
 
 void Citymap::addPubs()
@@ -106,22 +115,26 @@ void Citymap::addPubs()
     m_map_control->addLayer(m_layer_pubs);
 
     // Create the "Bagatelle" pub and add it to the layer.
-    std::shared_ptr<GeometryPoint> bagatelle(std::make_shared<GeometryPointImage>(PointWorldCoord(8.2606, 50.0052), ":/resources/images/pub.png"));
+    std::shared_ptr<GeometryPoint> bagatelle(std::make_shared<GeometryPointImage>(
+        PointWorldCoord(8.2606, 50.0052), ":/resources/images/pub.png"));
     bagatelle->setMetadata("name", "Bagatelle");
     m_layer_pubs->addGeometry(bagatelle);
 
     // Create the "Nirgendwo" pub and add it to the layer.
-    std::shared_ptr<GeometryPoint> nirgendwo(std::make_shared<GeometryPointImage>(PointWorldCoord(8.2595, 50.0048), ":/resources/images/pub.png"));
+    std::shared_ptr<GeometryPoint> nirgendwo(std::make_shared<GeometryPointImage>(
+        PointWorldCoord(8.2595, 50.0048), ":/resources/images/pub.png"));
     nirgendwo->setMetadata("name", "Nirgendwo");
     m_layer_pubs->addGeometry(nirgendwo);
 
     // Create the "Krokodil" pub and add it to the layer.
-    std::shared_ptr<GeometryPoint> krokodil(std::make_shared<GeometryPointImage>(PointWorldCoord(8.2594, 50.0106), ":/resources/images/pub.png"));
+    std::shared_ptr<GeometryPoint> krokodil(std::make_shared<GeometryPointImage>(
+        PointWorldCoord(8.2594, 50.0106), ":/resources/images/pub.png"));
     krokodil->setMetadata("name", "Krokodil");
     m_layer_pubs->addGeometry(krokodil);
 
     // Connect signal/slot to handle pubs being clicked.
-    QObject::connect(m_layer_pubs.get(), &LayerGeometry::geometryClicked, this, &Citymap::geometryClickedPub);
+    QObject::connect(m_layer_pubs.get(), &LayerGeometry::geometryClicked, this,
+                     &Citymap::geometryClickedPub);
 }
 
 void Citymap::addMuseums()
@@ -131,17 +144,20 @@ void Citymap::addMuseums()
     m_map_control->addLayer(m_layer_museum);
 
     // Create the "rgzm" pub and add it to the layer.
-    std::shared_ptr<GeometryPoint> rgzm(std::make_shared<GeometryPointImageScaled>(PointWorldCoord(8.269722, 50.006111), ":/resources/images/180-rgzm.jpg", 17));
+    std::shared_ptr<GeometryPoint> rgzm(std::make_shared<GeometryPointImageScaled>(
+        PointWorldCoord(8.269722, 50.006111), ":/resources/images/180-rgzm.jpg", 17));
     rgzm->setMetadata("name", "rgzm");
     m_layer_museum->addGeometry(rgzm);
 
     // Create the "lm" pub and add it to the layer.
-    std::shared_ptr<GeometryPoint> lm(std::make_shared<GeometryPointImageScaled>(PointWorldCoord(8.26778, 50.00385), ":/resources/images/180-lm.jpg", 17));
+    std::shared_ptr<GeometryPoint> lm(std::make_shared<GeometryPointImageScaled>(
+        PointWorldCoord(8.26778, 50.00385), ":/resources/images/180-lm.jpg", 17));
     lm->setMetadata("name", "lm");
     m_layer_museum->addGeometry(lm);
 
     // Connect signal/slot to handle sights being clicked.
-    QObject::connect(m_layer_museum.get(), &LayerGeometry::geometryClicked, this, &Citymap::geometryClicked);
+    QObject::connect(m_layer_museum.get(), &LayerGeometry::geometryClicked, this,
+                     &Citymap::geometryClicked);
 }
 
 void Citymap::addTours()
@@ -219,23 +235,57 @@ void Citymap::geometryClicked(const Geometry* geometry)
         // Handle the sight/musem.
         if(geometry->metadata("name") == "Mainzer Dom")
         {
-            info_dialog->setInfotext("<h1>Mainzer Dom</h1><p><img src=':/resources/images/180-dom.jpg' align='left'/>Der Hohe Dom zu Mainz ist die Bischofskirche der Diözese Mainz und steht unter dem Patrozinium des heiligen Martin von Tours. Der Ostchor ist dem Hl. Stephan geweiht. Der zu den Kaiserdomen zählende Bau ist in seiner heutigen Form eine dreischiffige romanische Säulenbasilika, die in ihren Anbauten sowohl gotische als auch barocke Elemente aufweist.</p>");
+            info_dialog->setInfotext(
+                "<h1>Mainzer Dom</h1><p><img src=':/resources/images/180-dom.jpg' "
+                "align='left'/>Der Hohe Dom zu Mainz ist die Bischofskirche der Diözese Mainz und "
+                "steht unter dem Patrozinium des heiligen Martin von Tours. Der Ostchor ist dem "
+                "Hl. Stephan geweiht. Der zu den Kaiserdomen zählende Bau ist in seiner heutigen "
+                "Form eine dreischiffige romanische Säulenbasilika, die in ihren Anbauten sowohl "
+                "gotische als auch barocke Elemente aufweist.</p>");
         }
         else if(geometry->metadata("name") == "St. Stephan")
         {
-            info_dialog->setInfotext("<h1>St. Stephan</h1><p><img src=':/resources/images/180-stephan.jpg' align='left'/>Die katholische Pfarrkirche Sankt Stephan in Mainz wurde 990 von Erzbischof Willigis auf der höchsten Erhebung der Stadt gegründet. Auftraggeberin war höchstwahrscheinlich die Kaiserwitwe Theophanu. Willigis wollte mit ihr die Gebetsstätte des Reiches schaffen. In der Kirche war ursprünglich ein Stift untergebracht. Der Propst des Stiftes verwaltete eines der Archidiakonate (mittelalterliche Organisationseinheit, ähnlich den heutigen Dekanaten) des Erzbistums.</p>");
+            info_dialog->setInfotext(
+                "<h1>St. Stephan</h1><p><img src=':/resources/images/180-stephan.jpg' "
+                "align='left'/>Die katholische Pfarrkirche Sankt Stephan in Mainz wurde 990 von "
+                "Erzbischof Willigis auf der höchsten Erhebung der Stadt gegründet. Auftraggeberin "
+                "war höchstwahrscheinlich die Kaiserwitwe Theophanu. Willigis wollte mit ihr die "
+                "Gebetsstätte des Reiches schaffen. In der Kirche war ursprünglich ein Stift "
+                "untergebracht. Der Propst des Stiftes verwaltete eines der Archidiakonate "
+                "(mittelalterliche Organisationseinheit, ähnlich den heutigen Dekanaten) des "
+                "Erzbistums.</p>");
         }
         else if(geometry->metadata("name") == "St. Quintin")
         {
-            info_dialog->setInfotext("<h1>St. Quintin</h1><p><img src=':/resources/images/180-quintin.jpg' align='left'/>Die Kirche St. Quintin in Mainz ist die Pfarrkirche der ältesten nachgewiesenen Pfarrei der Stadt.");
+            info_dialog->setInfotext("<h1>St. Quintin</h1><p><img "
+                                     "src=':/resources/images/180-quintin.jpg' align='left'/>Die "
+                                     "Kirche St. Quintin in Mainz ist die Pfarrkirche der ältesten "
+                                     "nachgewiesenen Pfarrei der Stadt.");
         }
         else if(geometry->metadata("name") == "rgzm")
         {
-            info_dialog->setInfotext("<h1>Römisch-Germanisches Zentralmuseum</h1><p><img src=':/resources/images/180-rgzm.jpg' align='left'/>Das Römisch-Germanische Zentralmuseum (RGZM) in Mainz ist ein Forschungsinstitut für Vor- und Frühgeschichte, das von Bund und Ländern getragen wird und zur Leibniz-Gemeinschaft deutscher Forschungseinrichtungen gehört. Gegliedert in mehrere Abteilungen, arbeitet das Institut im Bereich der Alten Welt sowie seiner Kontaktzonen von der Altsteinzeit bis ins Mittelalter.");
+            info_dialog->setInfotext(
+                "<h1>Römisch-Germanisches Zentralmuseum</h1><p><img "
+                "src=':/resources/images/180-rgzm.jpg' align='left'/>Das Römisch-Germanische "
+                "Zentralmuseum (RGZM) in Mainz ist ein Forschungsinstitut für Vor- und "
+                "Frühgeschichte, das von Bund und Ländern getragen wird und zur "
+                "Leibniz-Gemeinschaft deutscher Forschungseinrichtungen gehört. Gegliedert in "
+                "mehrere Abteilungen, arbeitet das Institut im Bereich der Alten Welt sowie seiner "
+                "Kontaktzonen von der Altsteinzeit bis ins Mittelalter.");
         }
         else if(geometry->metadata("name") == "lm")
         {
-            info_dialog->setInfotext("<h1>Landesmuseum Mainz</h1><p><img src=':/resources/images/180-lm.jpg' align='left'/>Das Landesmuseum Mainz ist eines der ältesten Museen in Deutschland. Eine seiner Vorgängerinstitutionen, die Städtische Gemäldesammlung, wurde bereits 1803 von Jean-Antoine Chaptal auf Veranlassung Napoléon Bonapartes durch eine Schenkung von 36 Gemälden gegründet. Das Museum, welches sich heute im ehemaligen kurfürstlichen Marstall befindet, gehört zusammen mit dem Römisch-Germanischen Zentralmuseum und dem Gutenbergmuseum zu den bedeutenden Museen in Mainz. Seine kunst- und kulturgeschichtliche Sammlung erstreckt sich von der Vorgeschichte über die römische Zeit, dem Mittelalter und Barock bis hin zur Jugendstilzeit und der Kunst des 20. Jahrhunderts.");
+            info_dialog->setInfotext(
+                "<h1>Landesmuseum Mainz</h1><p><img src=':/resources/images/180-lm.jpg' "
+                "align='left'/>Das Landesmuseum Mainz ist eines der ältesten Museen in "
+                "Deutschland. Eine seiner Vorgängerinstitutionen, die Städtische Gemäldesammlung, "
+                "wurde bereits 1803 von Jean-Antoine Chaptal auf Veranlassung Napoléon Bonapartes "
+                "durch eine Schenkung von 36 Gemälden gegründet. Das Museum, welches sich heute im "
+                "ehemaligen kurfürstlichen Marstall befindet, gehört zusammen mit dem "
+                "Römisch-Germanischen Zentralmuseum und dem Gutenbergmuseum zu den bedeutenden "
+                "Museen in Mainz. Seine kunst- und kulturgeschichtliche Sammlung erstreckt sich "
+                "von der Vorgeschichte über die römische Zeit, dem Mittelalter und Barock bis hin "
+                "zur Jugendstilzeit und der Kunst des 20. Jahrhunderts.");
         }
         if(geometry->metadata("name") != "")
         {
@@ -265,7 +315,8 @@ void Citymap::createActions()
     m_action_sights = new QAction(tr("Show Sights"), this);
     m_action_sights->setCheckable(true);
     m_action_sights->setChecked(true);
-    QObject::connect(m_action_sights, &QAction::triggered, m_layer_sights.get(), &Layer::setVisible);
+    QObject::connect(m_action_sights, &QAction::triggered, m_layer_sights.get(),
+                     &Layer::setVisible);
 
     // Create the pubs action.
     m_action_pubs = new QAction(tr("Show Pubs"), this);
@@ -277,27 +328,29 @@ void Citymap::createActions()
     m_action_museums = new QAction(tr("Show Museums"), this);
     m_action_museums->setCheckable(true);
     m_action_museums->setChecked(true);
-    QObject::connect(m_action_museums, &QAction::triggered, m_layer_museum.get(), &Layer::setVisible);
-
+    QObject::connect(m_action_museums, &QAction::triggered, m_layer_museum.get(),
+                     &Layer::setVisible);
 
     // Create the sight tour action.
     m_action_tour_sights = new QAction(tr("Show Sight Tour"), this);
     m_action_tour_sights->setCheckable(true);
     m_action_tour_sights->setChecked(true);
-    QObject::connect(m_action_tour_sights, &QAction::triggered, m_tour_sights.get(), &Geometry::setVisible);
+    QObject::connect(m_action_tour_sights, &QAction::triggered, m_tour_sights.get(),
+                     &Geometry::setVisible);
 
     // Create the pub tour action.
     m_action_tour_pubs = new QAction(tr("Show Pub Tour"), this);
     m_action_tour_pubs->setCheckable(true);
     m_action_tour_pubs->setChecked(true);
-    QObject::connect(m_action_tour_pubs, &QAction::triggered, m_tour_pubs.get(), &Geometry::setVisible);
+    QObject::connect(m_action_tour_pubs, &QAction::triggered, m_tour_pubs.get(),
+                     &Geometry::setVisible);
 
     // Create the museum tour action.
     m_action_tour_museums = new QAction(tr("Show Museum Tour"), this);
     m_action_tour_museums->setCheckable(true);
     m_action_tour_museums->setChecked(true);
-    QObject::connect(m_action_tour_museums, &QAction::triggered, m_tour_museums.get(), &Geometry::setVisible);
-
+    QObject::connect(m_action_tour_museums, &QAction::triggered, m_tour_museums.get(),
+                     &Geometry::setVisible);
 
     // Create the add note action.
     m_action_add_note = new QAction(tr("Add Note"), this);
@@ -305,8 +358,8 @@ void Citymap::createActions()
 
     // Create the calculate distance action.
     m_action_calculate_distance = new QAction(tr("Calculate Distance"), this);
-    QObject::connect(m_action_calculate_distance, &QAction::triggered, this, &Citymap::calculateDistance);
-
+    QObject::connect(m_action_calculate_distance, &QAction::triggered, this,
+                     &Citymap::calculateDistance);
 
     // Create the map provider actions.
     QActionGroup* map_provider_group = new QActionGroup(this);
@@ -325,15 +378,18 @@ void Citymap::createActions()
     m_action_osm->setChecked(true);
 
     // Connect signal/slot to set the map provider.
-    QObject::connect(map_provider_group, &QActionGroup::triggered, this, &Citymap::mapProviderSelected);
+    QObject::connect(map_provider_group, &QActionGroup::triggered, this,
+                     &Citymap::mapProviderSelected);
 
     // Create yahoo streets overlay action.
     m_action_yahoo_streets = new QAction(tr("Yahoo: Street Overlay"), this);
     m_action_yahoo_streets->setCheckable(true);
     m_action_yahoo_streets->setEnabled(false);
 
-    // Connect signal/slot to set the visibility of the yahoo streets layer when the action is toggled.
-    QObject::connect(m_action_yahoo_streets, &QAction::toggled, m_layer_yahoo_streets.get(), &Layer::setVisible);
+    // Connect signal/slot to set the visibility of the yahoo streets layer when the action is
+    // toggled.
+    QObject::connect(m_action_yahoo_streets, &QAction::toggled, m_layer_yahoo_streets.get(),
+                     &Layer::setVisible);
 }
 
 void Citymap::createMenus()
@@ -371,13 +427,15 @@ void Citymap::addNote()
     m_mode_note_adding = true;
 
     // Connect signal/slot to capture the next mouse click to create the note.
-    QObject::connect(m_map_control, &QMapControl::mouseEventPressCoordinate, this, &Citymap::writeNote);
+    QObject::connect(m_map_control, &QMapControl::mouseEventPressCoordinate, this,
+                     &Citymap::writeNote);
 }
 
 void Citymap::writeNote(QMouseEvent* /*mouse_event*/, PointWorldCoord press_coordinate)
 {
     // Create a point to represent the note.
-    std::shared_ptr<GeometryPointImageScaled> point(std::make_shared<GeometryPointImageScaled>(press_coordinate, ":/resources/images/note.png", 16));
+    std::shared_ptr<GeometryPointImageScaled> point(std::make_shared<GeometryPointImageScaled>(
+        press_coordinate, ":/resources/images/note.png", 16));
     point->setAlignmentType(GeometryPoint::AlignmentType::BottomLeft);
     point->setDrawMinimumPx(QSizeF(12, 10));
     point->setDrawMaximumPx(QSizeF(47, 40));
@@ -394,10 +452,12 @@ void Citymap::writeNote(QMouseEvent* /*mouse_event*/, PointWorldCoord press_coor
     m_geometry_text_edit->setVisible(true);
 
     // Disconnect the signal/slot to create a note.
-    QObject::disconnect(m_map_control, &QMapControl::mouseEventPressCoordinate, this, &Citymap::writeNote);
+    QObject::disconnect(m_map_control, &QMapControl::mouseEventPressCoordinate, this,
+                        &Citymap::writeNote);
 
     // Connect signal/slot to capture the next mouse double click to hide the note.
-    QObject::connect(m_map_control, &QMapControl::mouseEventDoubleClickCoordinate, this, &Citymap::hideNote);
+    QObject::connect(m_map_control, &QMapControl::mouseEventDoubleClickCoordinate, this,
+                     &Citymap::hideNote);
 }
 
 void Citymap::hideNote(QMouseEvent* mouse_event, PointWorldCoord /*press_coordinate*/)
@@ -419,7 +479,8 @@ void Citymap::hideNote(QMouseEvent* mouse_event, PointWorldCoord /*press_coordin
         }
 
         // Disconnect the signal/slot to hide the note.
-        QObject::disconnect(m_map_control, &QMapControl::mouseEventDoubleClickCoordinate, this, &Citymap::hideNote);
+        QObject::disconnect(m_map_control, &QMapControl::mouseEventDoubleClickCoordinate, this,
+                            &Citymap::hideNote);
     }
 }
 
@@ -442,7 +503,8 @@ void Citymap::editNote(const Geometry* geometry)
         m_geometry_text_edit->setVisible(true);
 
         // Connect signal/slot to capture the next mouse double click to hide the note.
-        QObject::connect(m_map_control, &QMapControl::mouseEventDoubleClickCoordinate, this, &Citymap::hideNote);
+        QObject::connect(m_map_control, &QMapControl::mouseEventDoubleClickCoordinate, this,
+                         &Citymap::hideNote);
     }
 }
 
@@ -452,7 +514,8 @@ void Citymap::calculateDistance()
     m_mode_distance_calculating = true;
 
     // Connect signal/slot to capture the next mouse click to start measuring.
-    QObject::connect(m_map_control, &QMapControl::mouseEventPressCoordinate, this, &Citymap::calculateDistanceClick);
+    QObject::connect(m_map_control, &QMapControl::mouseEventPressCoordinate, this,
+                     &Citymap::calculateDistanceClick);
 }
 
 void Citymap::calculateDistanceClick(QMouseEvent* evnt, PointWorldCoord press_coordinate)
@@ -464,7 +527,8 @@ void Citymap::calculateDistanceClick(QMouseEvent* evnt, PointWorldCoord press_co
         m_coord_start = press_coordinate;
 
         // Create a start point flag.
-        std::shared_ptr<GeometryPointImage> point_flag(std::make_shared<GeometryPointImage>(m_coord_start, ":/resources/images/flag.png"));
+        std::shared_ptr<GeometryPointImage> point_flag(
+            std::make_shared<GeometryPointImage>(m_coord_start, ":/resources/images/flag.png"));
         point_flag->setAlignmentType(GeometryPoint::AlignmentType::BottomRight);
 
         // Add the starting point to the layer.
@@ -484,20 +548,24 @@ void Citymap::calculateDistanceClick(QMouseEvent* evnt, PointWorldCoord press_co
 
         // Calculate the distance between the two points (Spherical law of cosines).
         const double radius(6371.0); // Earth's mean Radius in km.
-        const double distance = std::acos(std::sin(start_latitude) * std::sin(end_latitude) + std::cos(start_latitude) * std::cos(end_latitude) * std::cos(end_longitude - start_longitude)) * radius;
+        const double distance = std::acos(std::sin(start_latitude) * std::sin(end_latitude)
+                                          + std::cos(start_latitude) * std::cos(end_latitude)
+                                                * std::cos(end_longitude - start_longitude))
+                                * radius;
 
         // Draw a line string to show the distance.
         std::vector<PointWorldCoord> points;
         points.push_back(m_coord_start);
         points.push_back(m_coord_end);
         m_layer_notes->addGeometry(std::make_shared<GeometryLineString>(points));
-        QPixmap* pixmap = new QPixmap(100,20);
+        QPixmap* pixmap = new QPixmap(100, 20);
         pixmap->fill(Qt::transparent);
         QPainter painter(pixmap);
         painter.setFont(QFont("Helvetiva", 6));
         painter.drawText(pixmap->rect(), QString().setNum(distance, 'f', 3) + " km");
         painter.end();
-        std::shared_ptr<GeometryPointImage> point_end(std::make_shared<GeometryPointImage>(m_coord_end, *pixmap));
+        std::shared_ptr<GeometryPointImage> point_end(
+            std::make_shared<GeometryPointImage>(m_coord_end, *pixmap));
         point_end->setAlignmentType(GeometryPoint::AlignmentType::BottomLeft);
         m_layer_notes->addGeometry(point_end);
 
@@ -509,7 +577,8 @@ void Citymap::calculateDistanceClick(QMouseEvent* evnt, PointWorldCoord press_co
         m_mode_distance_calculating = false;
 
         // Disconnect the signal/slot to measure.
-        QObject::disconnect(m_map_control, &QMapControl::mouseEventPressCoordinate, this, &Citymap::calculateDistanceClick);
+        QObject::disconnect(m_map_control, &QMapControl::mouseEventPressCoordinate, this,
+                            &Citymap::calculateDistanceClick);
     }
 }
 
@@ -545,7 +614,9 @@ void Citymap::mapProviderSelected(QAction* action)
     else if(action == m_action_yahoo_satellite)
     {
         // Set the map adapter to Yahoo 'satellite'.
-        map_layer->setMapAdapter(std::make_shared<MapAdapterYahoo>(QUrl("http://us.maps3.yimg.com/aerial.maps.yimg.com/png?v=1.7&t=a&s=256&x=%x&y=%y&z=%zoom")));
+        map_layer->setMapAdapter(
+            std::make_shared<MapAdapterYahoo>(QUrl("http://us.maps3.yimg.com/aerial.maps.yimg.com/"
+                                                   "png?v=1.7&t=a&s=256&x=%x&y=%y&z=%zoom")));
 
         // Enable the yahoo street layer action.
         m_action_yahoo_streets->setEnabled(true);

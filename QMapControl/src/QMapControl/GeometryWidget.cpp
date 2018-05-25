@@ -1,27 +1,27 @@
 /*
-*
-* This file is part of QMapControl,
-* an open-source cross-platform map widget
-*
-* Copyright (C) 2007 - 2008 Kai Winter
-*
-* This program is free software: you can redistribute it and/or modify
-* it under the terms of the GNU Lesser General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU Lesser General Public License for more details.
-*
-* You should have received a copy of the GNU Lesser General Public License
-* along with QMapControl. If not, see <http://www.gnu.org/licenses/>.
-*
-* Contact e-mail: kaiwinter@gmx.de
-* Program URL   : http://qmapcontrol.sourceforge.net/
-*
-*/
+ *
+ * This file is part of QMapControl,
+ * an open-source cross-platform map widget
+ *
+ * Copyright (C) 2007 - 2008 Kai Winter
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with QMapControl. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Contact e-mail: kaiwinter@gmx.de
+ * Program URL   : http://qmapcontrol.sourceforge.net/
+ *
+ */
 
 #include "GeometryWidget.h"
 
@@ -34,7 +34,11 @@
 
 namespace qmapcontrol
 {
-    GeometryWidget::GeometryWidget(const qreal& longitude, const qreal& latitude, QWidget* widget, const int& zoom_minimum, const int& zoom_maximum)
+    GeometryWidget::GeometryWidget(const qreal& longitude,
+                                   const qreal& latitude,
+                                   QWidget* widget,
+                                   const int& zoom_minimum,
+                                   const int& zoom_maximum)
         : Geometry(Geometry::GeometryType::GeometryWidget, zoom_minimum, zoom_maximum),
           m_point_coord(PointWorldCoord(longitude, latitude)),
           m_widget(widget),
@@ -52,7 +56,10 @@ namespace qmapcontrol
         }
     }
 
-    GeometryWidget::GeometryWidget(const PointWorldCoord& point_coord, QWidget* widget, const int& zoom_minimum, const int& zoom_maximum)
+    GeometryWidget::GeometryWidget(const PointWorldCoord& point_coord,
+                                   QWidget* widget,
+                                   const int& zoom_minimum,
+                                   const int& zoom_maximum)
         : Geometry(Geometry::GeometryType::GeometryWidget, zoom_minimum, zoom_maximum),
           m_point_coord(point_coord),
           m_widget(widget),
@@ -142,33 +149,41 @@ namespace qmapcontrol
         {
             /// @todo move where offset is applied to the setGeometry function!
             // Translate the point into the current world pixel point, and remove the offset.
-            const PointWorldPx point_px(projection::get().toPointWorldPx(m_point_coord, controller_zoom) - offset_px);
+            const PointWorldPx point_px(
+                projection::get().toPointWorldPx(m_point_coord, controller_zoom) - offset_px);
 
             // Update the object size for the widget size for this controller zoom.
             const QSizeF widget_size_px(calculateGeometrySizePx(controller_zoom));
 
             // Calculate the top-left point.
-            const PointWorldPx top_left_point_px(calculateTopLeftPoint(point_px, m_alignment_type, widget_size_px));
+            const PointWorldPx top_left_point_px(
+                calculateTopLeftPoint(point_px, m_alignment_type, widget_size_px));
 
             // Set the new location of the geometry.
-            m_widget->setGeometry(top_left_point_px.x(), top_left_point_px.y(), widget_size_px.width(), widget_size_px.height());
+            m_widget->setGeometry(top_left_point_px.x(), top_left_point_px.y(),
+                                  widget_size_px.width(), widget_size_px.height());
         }
     }
 
     RectWorldCoord GeometryWidget::boundingBox(const int& controller_zoom) const
     {
         // Translate the point into the current world pixel point, and remove the offset.
-        const PointWorldPx point_px(projection::get().toPointWorldPx(m_point_coord, controller_zoom));
+        const PointWorldPx point_px(
+            projection::get().toPointWorldPx(m_point_coord, controller_zoom));
 
         // Update the object size for the widget size for this controller zoom.
         const QSizeF widget_size_px(calculateGeometrySizePx(controller_zoom));
 
         // Calculate the top-left and bottom-right points.
-        const PointWorldPx top_left_point_px(calculateTopLeftPoint(point_px, m_alignment_type, widget_size_px));
-        const PointWorldPx bottom_right_px(top_left_point_px.x() + widget_size_px.width(), top_left_point_px.y() + widget_size_px.height());
+        const PointWorldPx top_left_point_px(
+            calculateTopLeftPoint(point_px, m_alignment_type, widget_size_px));
+        const PointWorldPx bottom_right_px(top_left_point_px.x() + widget_size_px.width(),
+                                           top_left_point_px.y() + widget_size_px.height());
 
         // Returnt the bounding box in world coordinates.
-        return RectWorldCoord(projection::get().toPointWorldCoord(top_left_point_px, controller_zoom), projection::get().toPointWorldCoord(bottom_right_px, controller_zoom));
+        return RectWorldCoord(
+            projection::get().toPointWorldCoord(top_left_point_px, controller_zoom),
+            projection::get().toPointWorldCoord(bottom_right_px, controller_zoom));
     }
 
     bool GeometryWidget::touches(const Geometry* geometry, const int& controller_zoom) const
@@ -193,7 +208,9 @@ namespace qmapcontrol
                 case GeometryType::GeometryWidget:
                 {
                     // Check if the bounding boxes intersect.
-                    if(geometry->boundingBox(controller_zoom).rawRect().intersects(boundingBox(controller_zoom).rawRect()))
+                    if(geometry->boundingBox(controller_zoom)
+                           .rawRect()
+                           .intersects(boundingBox(controller_zoom).rawRect()))
                     {
                         // Set that we have touched.
                         return_touches = true;
@@ -205,7 +222,11 @@ namespace qmapcontrol
                 case GeometryType::GeometryPolygon:
                 {
                     // Check if the poylgon intersects with our bounding box.
-                    if(static_cast<const GeometryPolygon*>(geometry)->toQPolygonF().intersected(boundingBox(controller_zoom).rawRect()).empty() == false)
+                    if(static_cast<const GeometryPolygon*>(geometry)
+                           ->toQPolygonF()
+                           .intersected(boundingBox(controller_zoom).rawRect())
+                           .empty()
+                       == false)
                     {
                         // Set that we have touched.
                         return_touches = true;
@@ -228,7 +249,9 @@ namespace qmapcontrol
         return return_touches;
     }
 
-    void GeometryWidget::draw(QPainter& /*painter*/, const RectWorldCoord& /*backbuffer_rect_coord*/, const int& /*controller_zoom*/)
+    void GeometryWidget::draw(QPainter& /*painter*/,
+                              const RectWorldCoord& /*backbuffer_rect_coord*/,
+                              const int& /*controller_zoom*/)
     {
         // Do nothing.
     }
@@ -258,28 +281,32 @@ namespace qmapcontrol
                 if(m_draw_minimum_px.height() > -1.0)
                 {
                     // Take the highest height.
-                    return_size_px.setHeight(std::max(return_size_px.height(), m_draw_minimum_px.height()));
+                    return_size_px.setHeight(
+                        std::max(return_size_px.height(), m_draw_minimum_px.height()));
                 }
 
                 // Do we have a minimum width draw size set?
                 if(m_draw_minimum_px.width() > -1.0)
                 {
                     // Take the highest width.
-                    return_size_px.setWidth(std::max(return_size_px.width(), m_draw_minimum_px.width()));
+                    return_size_px.setWidth(
+                        std::max(return_size_px.width(), m_draw_minimum_px.width()));
                 }
 
                 // Do we have a maximum height draw size set?
                 if(m_draw_maximum_px.height() > -1.0)
                 {
                     // Take the lowest height.
-                    return_size_px.setHeight(std::min(return_size_px.height(), m_draw_maximum_px.height()));
+                    return_size_px.setHeight(
+                        std::min(return_size_px.height(), m_draw_maximum_px.height()));
                 }
 
                 // Do we have a maximum width draw size set?
                 if(m_draw_maximum_px.width() > -1.0)
                 {
                     // Take the lowest width.
-                    return_size_px.setWidth(std::min(return_size_px.width(), m_draw_maximum_px.width()));
+                    return_size_px.setWidth(
+                        std::min(return_size_px.width(), m_draw_maximum_px.width()));
                 }
             }
         }
@@ -287,5 +314,4 @@ namespace qmapcontrol
         // Return the size.
         return return_size_px;
     }
-
 }

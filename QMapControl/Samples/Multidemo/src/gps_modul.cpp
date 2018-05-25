@@ -24,12 +24,7 @@ namespace
     std::uniform_int_distribution<int> m_dist(0, 10);
 }
 
-GPS_Modul::GPS_Modul(QObject *parent)
-    : QObject(parent),
-      m_running(false)
-{
-
-}
+GPS_Modul::GPS_Modul(QObject* parent) : QObject(parent), m_running(false) {}
 
 void GPS_Modul::start()
 {
@@ -59,7 +54,7 @@ void GPS_Modul::tick()
         m_y += 0.1;
 
         // Emit that we have moved the point.
-        emit positionChanged(PointWorldCoord(m_x ,m_y));
+        emit positionChanged(PointWorldCoord(m_x, m_y));
     }
 
     // Are we still running?

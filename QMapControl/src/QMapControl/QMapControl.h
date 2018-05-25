@@ -1,27 +1,27 @@
 /*
-*
-* This file is part of QMapControl,
-* an open-source cross-platform map widget
-*
-* Copyright (C) 2007 - 2008 Kai Winter
-*
-* This program is free software: you can redistribute it and/or modify
-* it under the terms of the GNU Lesser General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU Lesser General Public License for more details.
-*
-* You should have received a copy of the GNU Lesser General Public License
-* along with QMapControl. If not, see <http://www.gnu.org/licenses/>.
-*
-* Contact e-mail: kaiwinter@gmx.de
-* Program URL   : http://qmapcontrol.sourceforge.net/
-*
-*/
+ *
+ * This file is part of QMapControl,
+ * an open-source cross-platform map widget
+ *
+ * Copyright (C) 2007 - 2008 Kai Winter
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with QMapControl. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Contact e-mail: kaiwinter@gmx.de
+ * Program URL   : http://qmapcontrol.sourceforge.net/
+ *
+ */
 
 #pragma once
 
@@ -44,12 +44,12 @@
 #include <mutex>
 
 // Local includes.
-#include "qmapcontrol_global.h"
 #include "Geometry.h"
 #include "Layer.h"
 #include "Point.h"
 #include "Projection.h"
 #include "QProgressIndicator.h"
+#include "qmapcontrol_global.h"
 
 //! QMapControl namespace
 namespace qmapcontrol
@@ -57,8 +57,8 @@ namespace qmapcontrol
     /*!
      * This is the main widget.
      * Layers can be added to this control.
-     * QMapControl has to be instantiated with a QSizeF which sets the size the widget takes in a layout.
-     * The given size is also the size which is assured to be filled with map images.
+     * QMapControl has to be instantiated with a QSizeF which sets the size the widget takes in a
+     * layout. The given size is also the size which is assured to be filled with map images.
      *
      * @author Kai Winter <kaiwinter@gmx.de>
      * @author Chris Stylianou <chris5287@gmail.com>
@@ -115,10 +115,12 @@ namespace qmapcontrol
         QMapControl(const QSizeF& size_px, QWidget* parent = 0, Qt::WindowFlags window_flags = 0);
 
         //! Disable copy constructor.
-        ///QMapControl(const QMapControl&) = delete; @todo re-add once MSVC supports default/delete syntax.
+        /// QMapControl(const QMapControl&) = delete; @todo re-add once MSVC supports default/delete
+        /// syntax.
 
         //! Disable copy assignment.
-        ///QMapControl& operator=(const QMapControl&) = delete; @todo re-add once MSVC supports default/delete syntax.
+        /// QMapControl& operator=(const QMapControl&) = delete; @todo re-add once MSVC supports
+        /// default/delete syntax.
 
         //! Destructor.
         ~QMapControl();
@@ -144,12 +146,16 @@ namespace qmapcontrol
 
         /*!
          * Enable persistent caching of map tiles.
-         * Call this method to allow the QMapControl widget to save map tiles persistent (also over application restarts).
-         * Default: Images are stored in the subdirectory "QMapControl.cache" within the user's home directory.
+         * Call this method to allow the QMapControl widget to save map tiles persistent (also over
+         * application restarts). Default: Images are stored in the subdirectory "QMapControl.cache"
+         * within the user's home directory.
          * @param path The path where the images should be stored.
-         * @param expiry The max age (in minutes) of an image before its removed and a new one is requested (0 to keep forever).
+         * @param expiry The max age (in minutes) of an image before its removed and a new one is
+         * requested (0 to keep forever).
          */
-        void enablePersistentCache(const std::chrono::minutes& expiry = std::chrono::minutes(0), const QDir& path = QDir::homePath() + QDir::separator() + "QMapControl.cache");
+        void enablePersistentCache(const std::chrono::minutes& expiry = std::chrono::minutes(0),
+                                   const QDir& path
+                                   = QDir::homePath() + QDir::separator() + "QMapControl.cache");
 
         /*!
          * Sets the proxy for HTTP connections.
@@ -165,7 +171,8 @@ namespace qmapcontrol
         void setProxy(const std::string& host, const int& port);
 
         /*!
-         * Whether the scaled primary screen image should be displayed during zoom changes in the background.
+         * Whether the scaled primary screen image should be displayed during zoom changes in the
+         * background.
          * @param visible Whether the scaled background image should be displayed.
          */
         void enableScaledBackground(const bool& visible);
@@ -198,10 +205,13 @@ namespace qmapcontrol
 
         /*!
          * Adds a layer.
-         * If multiple layers are added, they are painted in the added order (the last added wil be the top layer).
+         * If multiple layers are added, they are painted in the added order (the last added wil be
+         * the top layer).
          * @param layer The layer which should be added.
-         * @param index The index position the layer should added (-1 means the layer is added to the top).
-         * @note 'index 0' is the base layer, 'index 1 layer' will be painted on top of 'index 0 layer', and so on...
+         * @param index The index position the layer should added (-1 means the layer is added to
+         * the top).
+         * @note 'index 0' is the base layer, 'index 1 layer' will be painted on top of 'index 0
+         * layer', and so on...
          */
         void addLayer(const std::shared_ptr<Layer>& layer, const int& index = -1);
 
@@ -263,11 +273,13 @@ namespace qmapcontrol
          * @param top_left_coord The top-left coordinate of the limited viewport rect.
          * @param bottom_right_coord The bottom-right coordinate of the limited viewport rect.
          */
-        void setLimitedViewportRect(const PointWorldCoord& top_left_coord, const PointWorldCoord& bottom_right_coord);
+        void setLimitedViewportRect(const PointWorldCoord& top_left_coord,
+                                    const PointWorldCoord& bottom_right_coord);
 
         // Map management.
         /*!
-         * Fetches the map focus point in world coordinates (location on map in relation to the center of the screen).
+         * Fetches the map focus point in world coordinates (location on map in relation to the
+         * center of the screen).
          * @return The map focus point in world coordinates.
          */
         PointWorldCoord mapFocusPointCoord() const;
@@ -284,7 +296,8 @@ namespace qmapcontrol
          * @param points_coord The coorinates to based the map focus point on.
          * @param auto_zoom Whether to automatically zoom to the best level.
          */
-        void setMapFocusPoint(const std::vector<PointWorldCoord>& points_coord, const bool& auto_zoom = false);
+        void setMapFocusPoint(const std::vector<PointWorldCoord>& points_coord,
+                              const bool& auto_zoom = false);
 
         /*!
          * Smoothly moves the center of the view to the given coordinate.
@@ -292,7 +305,10 @@ namespace qmapcontrol
          * @param steps The number of steps to use in the animation.
          * @param step_interval The number of millseconds to wait between each step.
          */
-        void setMapFocusPointAnimated(const PointWorldCoord& coordinate, const int& steps = 25, const std::chrono::milliseconds& step_interval = std::chrono::milliseconds(50));
+        void setMapFocusPointAnimated(const PointWorldCoord& coordinate,
+                                      const int& steps = 25,
+                                      const std::chrono::milliseconds& step_interval
+                                      = std::chrono::milliseconds(50));
 
         /*!
          * Scrol the view left by required pixels.
@@ -448,7 +464,8 @@ namespace qmapcontrol
     private:
         // Map management.
         /*!
-         * Converts a mouse click point in pixels to map point in pixels (uses the current map focus point).
+         * Converts a mouse click point in pixels to map point in pixels (uses the current map focus
+         * point).
          * @param click_point_px The mouse click point in pixels to convert.
          * @return the map point in pixels.
          */
@@ -460,10 +477,12 @@ namespace qmapcontrol
          * @param map_focus_point_px The map focus point in pixels to use.
          * @return the map point in pixels.
          */
-        PointWorldPx toPointWorldPx(const PointViewportPx& click_point_px, const PointWorldPx& map_focus_point_px) const;
+        PointWorldPx toPointWorldPx(const PointViewportPx& click_point_px,
+                                    const PointWorldPx& map_focus_point_px) const;
 
         /*!
-         * Converts a mouse click point in pixels to map point in coordinates (uses the current map focus point).
+         * Converts a mouse click point in pixels to map point in coordinates (uses the current map
+         * focus point).
          * @param click_point_px The mouse click point in pixels to convert.
          * @return the map point in coordinates.
          */
@@ -475,16 +494,19 @@ namespace qmapcontrol
          * @param map_focus_point_px The map focus point in pixels to use.
          * @return the map point in coordinates.
          */
-        PointWorldCoord toPointWorldCoord(const PointViewportPx& click_point_px, const PointWorldPx& map_focus_point_px) const;
+        PointWorldCoord toPointWorldCoord(const PointViewportPx& click_point_px,
+                                          const PointWorldPx& map_focus_point_px) const;
 
         /*!
-         * Fetches the map focus point in pixels (location on map in relation to the center of the screen).
+         * Fetches the map focus point in pixels (location on map in relation to the center of the
+         * screen).
          * @return the map focus point in pixels.
          */
         PointWorldPx mapFocusPointWorldPx() const;
 
         /*!
-         * Calculates the map focus point from a list of coordinates, based on the x and y mean values.
+         * Calculates the map focus point from a list of coordinates, based on the x and y mean
+         * values.
          * @param points_coord The coorinates to based the map focus point on.
          * @return the map focus point, based on the x and y mean values.
          */
@@ -528,12 +550,14 @@ namespace qmapcontrol
 
         /*!
          * Redraws the primary screen image.
-         * @param force_redraw Whether to force the backbuffer to be redrawn, even if checkBackbuffer() states we do not need to.
+         * @param force_redraw Whether to force the backbuffer to be redrawn, even if
+         * checkBackbuffer() states we do not need to.
          */
         void redrawPrimaryScreen(const bool& force_redraw = false);
 
         /*!
-         * Redraws the backbuffer image, which when ready will emit updatePrimaryScreen() for it to be stored/drawn.
+         * Redraws the backbuffer image, which when ready will emit updatePrimaryScreen() for it to
+         * be stored/drawn.
          */
         void redrawBackbuffer();
 
@@ -558,12 +582,15 @@ namespace qmapcontrol
         void loadingFinished();
 
         /*!
-         * Called when the backbuffer has been updated, to replace the existing primary screen and request a QWidget::update().
+         * Called when the backbuffer has been updated, to replace the existing primary screen and
+         * request a QWidget::update().
          * @param backbuffer_pixmap The updated backbuffer pixmap.
          * @param backbuffer_rect_px The updated backbuffer rect in pixels.
          * @param backbuffer_map_focus_px The updated backbuffer map foucs point in pixels.
          */
-        void updatePrimaryScreen(QPixmap backbuffer_pixmap, RectWorldPx backbuffer_rect_px, PointWorldPx backbuffer_map_focus_px);
+        void updatePrimaryScreen(QPixmap backbuffer_pixmap,
+                                 RectWorldPx backbuffer_rect_px,
+                                 PointWorldPx backbuffer_map_focus_px);
 
     signals:
         // Geometry management.
@@ -577,39 +604,51 @@ namespace qmapcontrol
          * Signal emitted when geometries are selected (see MouseButtonModes).
          * @param selected_geometries The selected geometries in each layer.
          */
-        void geometriesSelected(std::map<std::string, std::vector<std::shared_ptr<Geometry>>> selected_geometries);
+        void geometriesSelected(
+            std::map<std::string, std::vector<std::shared_ptr<Geometry>>> selected_geometries);
 
         // Mouse management.
         /*!
-         * Signal emitted on MousePressEvents with the additional map coordinates of the mouse press.
+         * Signal emitted on MousePressEvents with the additional map coordinates of the mouse
+         * press.
          * @param mouse_event The QMouseEvent that occured.
          * @param press_coordinate The corresponding world coordinate of the mouse press.
          */
         void mouseEventPressCoordinate(QMouseEvent* mouse_event, PointWorldCoord press_coordinate);
 
         /*!
-         * Signal emitted on MouseReleaseEvents with the additional map coordinates of the mouse press/release.
+         * Signal emitted on MouseReleaseEvents with the additional map coordinates of the mouse
+         * press/release.
          * @param mouse_event The QMouseEvent that occured.
          * @param press_coordinate The corresponding world coordinate of the mouse press.
          * @param release_coordinate The corresponding world coordinate of the mouse release.
          */
-        void mouseEventReleaseCoordinate(QMouseEvent* mouse_event, PointWorldCoord press_coordinate, PointWorldCoord release_coordinate);
+        void mouseEventReleaseCoordinate(QMouseEvent* mouse_event,
+                                         PointWorldCoord press_coordinate,
+                                         PointWorldCoord release_coordinate);
 
         /*!
-         * Signal emitted on MouseDoubleClickEvents with the additional map coordinates of the mouse press/double press.
+         * Signal emitted on MouseDoubleClickEvents with the additional map coordinates of the mouse
+         * press/double press.
          * @param mouse_event The QMouseEvent that occured.
          * @param press_coordinate The corresponding world coordinate of the mouse press.
-         * @param double_press_coordinate The corresponding world coordinate of the mouse double press.
+         * @param double_press_coordinate The corresponding world coordinate of the mouse double
+         * press.
          */
-        void mouseEventDoubleClickCoordinate(QMouseEvent* mouse_event, PointWorldCoord press_coordinate, PointWorldCoord double_press_coordinate);
+        void mouseEventDoubleClickCoordinate(QMouseEvent* mouse_event,
+                                             PointWorldCoord press_coordinate,
+                                             PointWorldCoord double_press_coordinate);
 
         /*!
-         * Signal emitted on MouseMoveEvents with the additional map coordinates of the mouse press/current.
+         * Signal emitted on MouseMoveEvents with the additional map coordinates of the mouse
+         * press/current.
          * @param mouse_event The QMouseEvent that occured.
          * @param press_coordinate The corresponding world coordinate of the mouse press.
          * @param current_coordinate The corresponding world coordinate of the current mouse.
          */
-        void mouseEventMoveCoordinate(QMouseEvent* mouse_event, PointWorldCoord press_coordinate, PointWorldCoord current_coordinate);
+        void mouseEventMoveCoordinate(QMouseEvent* mouse_event,
+                                      PointWorldCoord press_coordinate,
+                                      PointWorldCoord current_coordinate);
 
         // Drawing management.
         /*!
@@ -618,14 +657,17 @@ namespace qmapcontrol
          * @param backbuffer_rect_px The updated backbuffer rect in pixels.
          * @param backbuffer_map_focus_px The updated backbuffer map foucs point in pixels.
          */
-        void updatedBackBuffer(QPixmap backbuffer_pixmap, RectWorldPx backbuffer_rect_px, PointWorldPx backbuffer_map_focus_px);
+        void updatedBackBuffer(QPixmap backbuffer_pixmap,
+                               RectWorldPx backbuffer_rect_px,
+                               PointWorldPx backbuffer_map_focus_px);
 
     private:
         //! Disable copy constructor.
         QMapControl(const QMapControl&); /// @todo remove once MSVC supports default/delete syntax.
 
         //! Disable copy assignment.
-        QMapControl& operator=(const QMapControl&); /// @todo remove once MSVC supports default/delete syntax.
+        QMapControl& operator=(const QMapControl&); /// @todo remove once MSVC supports
+                                                    /// default/delete syntax.
 
         /// Whether the scale should be visible.
         bool m_scalebar_enabled;
@@ -648,7 +690,8 @@ namespace qmapcontrol
         /// The viewport (visible-part of each layer) size in pixels.
         QSizeF m_viewport_size_px;
 
-        /// The viewport (visible-part of each layer) top-left offset for the center point in pixels.
+        /// The viewport (visible-part of each layer) top-left offset for the center point in
+        /// pixels.
         PointViewportPx m_viewport_center_px;
 
         /// The viewing bounding box coord (set to RectWorldCoord(0.0, 0.0, 0.0, 0.0) to disable.
@@ -684,7 +727,8 @@ namespace qmapcontrol
         /// The left mouse button mode.
         MouseButtonMode m_mouse_left_mode;
 
-        /// Whether the left mouse button drawn/pan shape's origin is centered to the starting mouse point.
+        /// Whether the left mouse button drawn/pan shape's origin is centered to the starting mouse
+        /// point.
         bool m_mouse_left_origin_center;
 
         /// Whether the right mouse button is currently pressed.
@@ -693,7 +737,8 @@ namespace qmapcontrol
         /// The right mouse button mode.
         MouseButtonMode m_mouse_right_mode;
 
-        /// Whether the right mouse button drawn/pan shape's origin is centered to the starting mouse point.
+        /// Whether the right mouse button drawn/pan shape's origin is centered to the starting
+        /// mouse point.
         bool m_mouse_right_origin_center;
 
         /// The mouse position when a mouse button was initially pressed in pixels.

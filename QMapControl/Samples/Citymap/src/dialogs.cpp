@@ -3,8 +3,7 @@
 // Qt includes.
 #include <QtWidgets/QHBoxLayout>
 
-InfoDialog::InfoDialog(QWidget* parent)
-    : QDialog(parent)
+InfoDialog::InfoDialog(QWidget* parent) : QDialog(parent)
 {
     // Set the dialog flags.
     setWindowFlags(Qt::Dialog | Qt::WindowStaysOnTopHint);

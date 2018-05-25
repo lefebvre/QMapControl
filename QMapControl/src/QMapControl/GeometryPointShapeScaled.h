@@ -24,19 +24,20 @@
 #pragma once
 
 // Local includes.
-#include "qmapcontrol_global.h"
 #include "GeometryPointShape.h"
+#include "qmapcontrol_global.h"
 
 namespace qmapcontrol
 {
     //! Draws a scaled shape at a specific point onto the map.
     /*!
-     * This class draws a scaled shape at a specific point onto the map. GeometryPointShape is an abstract (non-instantiable) class.
+     * This class draws a scaled shape at a specific point onto the map. GeometryPointShape is an
+     * abstract (non-instantiable) class.
      *
-     * To create scaled shape (shape that increases/decreases size on zooming) a base zoom level has to be set.
-     * The base level is the zoom level on which the shape gets displayed at its real size.
-     * On lower zoom levels it gets displayed smaller and on higher zoom levels larger.
-     * A minimal size can be set as well as a maximum size.
+     * To create scaled shape (shape that increases/decreases size on zooming) a base zoom level has
+     * to be set. The base level is the zoom level on which the shape gets displayed at its real
+     * size. On lower zoom levels it gets displayed smaller and on higher zoom levels larger. A
+     * minimal size can be set as well as a maximum size.
      * @see setBaselevel, setDrawMinimumPx, setDrawMaximumPx.
      *
      * @author Kai Winter <kaiwinter@gmx.de>
@@ -52,38 +53,57 @@ namespace qmapcontrol
          * @param longitude The longitude of the point to be displayed (world coordinates).
          * @param latitude The latitude of the point to be displayed (world coordinates).
          * @param base_size_px The size of the shape (pixels).
-         * @param base_zoom The zoom level where the shape will be drawn at its real size (use -1 to disable).
+         * @param base_zoom The zoom level where the shape will be drawn at its real size (use -1 to
+         * disable).
          * @param zoom_minimum The minimum zoom level to show this geometry at.
          * @param zoom_maximum The maximum zoom level to show this geometry at.
          */
-        GeometryPointShapeScaled(const qreal& longitude, const qreal& latitude, const QSizeF& base_size_px, const int& base_zoom, const int& zoom_minimum = 0, const int& zoom_maximum = 17);
+        GeometryPointShapeScaled(const qreal& longitude,
+                                 const qreal& latitude,
+                                 const QSizeF& base_size_px,
+                                 const int& base_zoom,
+                                 const int& zoom_minimum = 0,
+                                 const int& zoom_maximum = 17);
 
         //! Constructor.
         /*!
          * This constructor creates a point to be displayed.
          * @param point_coord The point to be displayed (world coordinates).
          * @param base_size_px The size of the shape (pixels).
-         * @param base_zoom The zoom level where the shape will be drawn at its real size (use -1 to disable).
+         * @param base_zoom The zoom level where the shape will be drawn at its real size (use -1 to
+         * disable).
          * @param zoom_minimum The minimum zoom level to show this geometry at.
          * @param zoom_maximum The maximum zoom level to show this geometry at.
          */
-        GeometryPointShapeScaled(const PointWorldCoord& point_coord, const QSizeF& base_size_px, const int& base_zoom, const int& zoom_minimum = 0, const int& zoom_maximum = 17);
+        GeometryPointShapeScaled(const PointWorldCoord& point_coord,
+                                 const QSizeF& base_size_px,
+                                 const int& base_zoom,
+                                 const int& zoom_minimum = 0,
+                                 const int& zoom_maximum = 17);
 
         //! Disable copy constructor.
-        ///GeometryPointShapeScaled(const GeometryPointShapeScaled&) = delete; @todo re-add once MSVC supports default/delete syntax.
+        /// GeometryPointShapeScaled(const GeometryPointShapeScaled&) = delete; @todo re-add once
+        /// MSVC supports default/delete syntax.
 
         //! Disable copy assignment.
-        ///GeometryPointShapeScaled& operator=(const GeometryPointShapeScaled&) = delete; @todo re-add once MSVC supports default/delete syntax.
+        /// GeometryPointShapeScaled& operator=(const GeometryPointShapeScaled&) = delete; @todo
+        /// re-add once MSVC supports default/delete syntax.
 
         //! Destructor.
-        virtual ~GeometryPointShapeScaled() { } /// = default; @todo re-add once MSVC supports default/delete syntax.
+        virtual ~GeometryPointShapeScaled() {
+        } /// = default; @todo re-add once MSVC supports default/delete syntax.
 
     private:
         //! Disable copy constructor.
-        GeometryPointShapeScaled(const GeometryPointShapeScaled&); /// @todo remove once MSVC supports default/delete syntax.
+        GeometryPointShapeScaled(const GeometryPointShapeScaled&); /// @todo remove once MSVC
+                                                                   /// supports default/delete
+                                                                   /// syntax.
 
         //! Disable copy assignment.
-        GeometryPointShapeScaled& operator=(const GeometryPointShapeScaled&); /// @todo remove once MSVC supports default/delete syntax.
+        GeometryPointShapeScaled& operator=(const GeometryPointShapeScaled&); /// @todo remove once
+                                                                              /// MSVC supports
+                                                                              /// default/delete
+                                                                              /// syntax.
 
     public:
         /*!
@@ -97,7 +117,8 @@ namespace qmapcontrol
          * - At lower zoom levels, the shape will be drawn smaller.
          * - At higher zoom levels, the shape will be drawn larger.
          * @see setDrawMinimumPx, setDrawMaximumPx
-         * @param base_zoom The zoom level where the shape will be drawn at its real size (use -1 to disable).
+         * @param base_zoom The zoom level where the shape will be drawn at its real size (use -1 to
+         * disable).
          */
         void setBaseZoom(const int& base_zoom = -1);
 

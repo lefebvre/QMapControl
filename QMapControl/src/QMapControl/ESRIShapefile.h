@@ -1,27 +1,27 @@
 /*
-*
-* This file is part of QMapControl,
-* an open-source cross-platform map widget
-*
-* Copyright (C) 2007 - 2008 Kai Winter
-*
-* This program is free software: you can redistribute it and/or modify
-* it under the terms of the GNU Lesser General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU Lesser General Public License for more details.
-*
-* You should have received a copy of the GNU Lesser General Public License
-* along with QMapControl. If not, see <http://www.gnu.org/licenses/>.
-*
-* Contact e-mail: kaiwinter@gmx.de
-* Program URL   : http://qmapcontrol.sourceforge.net/
-*
-*/
+ *
+ * This file is part of QMapControl,
+ * an open-source cross-platform map widget
+ *
+ * Copyright (C) 2007 - 2008 Kai Winter
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with QMapControl. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Contact e-mail: kaiwinter@gmx.de
+ * Program URL   : http://qmapcontrol.sourceforge.net/
+ *
+ */
 
 #pragma once
 
@@ -39,8 +39,8 @@
 #include <string>
 
 // Local includes.
-#include "qmapcontrol_global.h"
 #include "Point.h"
+#include "qmapcontrol_global.h"
 
 namespace qmapcontrol
 {
@@ -62,7 +62,10 @@ namespace qmapcontrol
          * @param zoom_minimum The minimum zoom level to show this ESRI Shapefile at.
          * @param zoom_maximum The maximum zoom level to show this ESRI Shapefile at.
          */
-        ESRIShapefile(const std::string& file_path, const std::string& layer_name, const int& zoom_minimum = 0, const int& zoom_maximum = 17);
+        ESRIShapefile(const std::string& file_path,
+                      const std::string& layer_name,
+                      const int& zoom_minimum = 0,
+                      const int& zoom_maximum = 17);
 
         //! Destructor.
         virtual ~ESRIShapefile();
@@ -124,20 +127,23 @@ namespace qmapcontrol
         /*!
          * Draws ESRI Shapefiles to a pixmap using the provided painter.
          * @param painter The painter that will draw to the pixmap.
-         * @param backbuffer_rect_px Only draw geometries that are contained in the backbuffer rect (pixels).
+         * @param backbuffer_rect_px Only draw geometries that are contained in the backbuffer rect
+         * (pixels).
          * @param controller_zoom The current controller zoom.
          */
-        void draw(QPainter& painter, const RectWorldPx& backbuffer_rect_px, const int& controller_zoom) const;
+        void draw(QPainter& painter,
+                  const RectWorldPx& backbuffer_rect_px,
+                  const int& controller_zoom) const;
 
     protected:
-
         /*!
          * Draws ESRI Shapefile feature to a pixmap using the provided painter.
          * @param ogr_feature The feature to draw.
          * @param painter The painter that will draw to the pixmap.
          * @param controller_zoom The current controller zoom.
          */
-        virtual void drawFeature(OGRFeature* ogr_feature, QPainter& painter, const int& controller_zoom) const;
+        virtual void
+        drawFeature(OGRFeature* ogr_feature, QPainter& painter, const int& controller_zoom) const;
 
     signals:
         /*!

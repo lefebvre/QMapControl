@@ -1,24 +1,24 @@
 /*
-*
-* This file is part of QProgressIndicator,
-* an open-source recent files menu widget
-*
-* Copyright (C) 2009 - 2010 Morgan Leborgne
-*
-* This program is free software: you can redistribute it and/or modify
-* it under the terms of the GNU Lesser General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU Lesser General Public License for more details.
-*
-* You should have received a copy of the GNU Lesser General Public License
-* along with QProgressIndicator. If not, see <http://www.gnu.org/licenses/>.
-*
-*/
+ *
+ * This file is part of QProgressIndicator,
+ * an open-source recent files menu widget
+ *
+ * Copyright (C) 2009 - 2010 Morgan Leborgne
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with QProgressIndicator. If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
 
 #pragma once
 
@@ -27,9 +27,10 @@
 #include <QtWidgets/QWidget>
 
 /*!
- * The QProgressIndicator class lets an application display a progress indicator to show that a lengthy task is under way.
- * Progress indicators are indeterminate and do nothing more than spin to show that the application is busy.
-*/
+ * The QProgressIndicator class lets an application display a progress indicator to show that a
+ * lengthy task is under way. Progress indicators are indeterminate and do nothing more than spin to
+ * show that the application is busy.
+ */
 class QProgressIndicator : public QWidget
 {
     Q_OBJECT
@@ -46,17 +47,20 @@ public:
     explicit QProgressIndicator(QWidget* parent = 0);
 
     //! Copy constructor.
-    ///QProgressIndicator(const QProgressIndicator&) = default; @todo re-add once MSVC supports default/delete syntax.
+    /// QProgressIndicator(const QProgressIndicator&) = default; @todo re-add once MSVC supports
+    /// default/delete syntax.
 
     //! Copy assignment.
-    ///QProgressIndicator& operator=(const QProgressIndicator&) = default; @todo re-add once MSVC supports default/delete syntax.
+    /// QProgressIndicator& operator=(const QProgressIndicator&) = default; @todo re-add once MSVC
+    /// supports default/delete syntax.
 
     //! Destructor.
-    ~QProgressIndicator() { } /// = default; @todo re-add once MSVC supports default/delete syntax.
+    ~QProgressIndicator() {} /// = default; @todo re-add once MSVC supports default/delete syntax.
 
     /*!
      * Returns the delay between animation steps.
-     * @return The number of milliseconds between animation steps. By default, the animation delay is set to 40 milliseconds.
+     * @return The number of milliseconds between animation steps. By default, the animation delay
+     * is set to 40 milliseconds.
      * @sa setAnimationDelay
      */
     int animationDelay() const;
@@ -69,8 +73,10 @@ public:
     bool isAnimated() const;
 
     /*!
-     * Returns a Boolean value indicating whether the receiver shows itself even when it is not animating.
-     * @return Return true if the progress indicator shows itself even when it is not animating. By default, it returns false.
+     * Returns a Boolean value indicating whether the receiver shows itself even when it is not
+     * animating.
+     * @return Return true if the progress indicator shows itself even when it is not animating. By
+     * default, it returns false.
      * @sa setDisplayedWhenStopped
      */
     bool isDisplayedWhenStopped() const;
@@ -110,7 +116,8 @@ public slots:
 
     /*!
      * Sets the delay between animation steps.
-     * Setting the delay to a value larger than 40 slows the animation, while setting the delay to a smaller value speeds it up.
+     * Setting the delay to a value larger than 40 slows the animation, while setting the delay to a
+     * smaller value speeds it up.
      * @param delay The delay, in milliseconds.
      * @sa animationDelay
      */
@@ -118,7 +125,8 @@ public slots:
 
     /*!
      * Sets whether the component hides itself when it is not animating.
-     * @param state The animation state. Set false to hide the progress indicator when it is not animating; otherwise true.
+     * @param state The animation state. Set false to hide the progress indicator when it is not
+     * animating; otherwise true.
      * @sa isDisplayedWhenStopped
      */
     void setDisplayedWhenStopped(const bool& state);

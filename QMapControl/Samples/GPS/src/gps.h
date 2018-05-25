@@ -15,7 +15,7 @@ using namespace qmapcontrol;
  * @author Kai Winter <kaiwinter@gmx.de>
  * @author Chris Stylianou <chris5287@gmail.com>
  */
-class GPS: public QMainWindow
+class GPS : public QMainWindow
 {
     Q_OBJECT
 
@@ -28,13 +28,13 @@ public:
     GPS(QWidget* parent = 0);
 
     //! Disable copy constructor.
-    ///GPS(const GPS&) = delete; @todo re-add once MSVC supports default/delete syntax.
+    /// GPS(const GPS&) = delete; @todo re-add once MSVC supports default/delete syntax.
 
     //! Disable copy assignment.
-    ///GPS& operator=(const GPS&) = delete; @todo re-add once MSVC supports default/delete syntax.
+    /// GPS& operator=(const GPS&) = delete; @todo re-add once MSVC supports default/delete syntax.
 
     //! Destructor.
-    ~GPS() { } /// = default; @todo re-add once MSVC supports default/delete syntax.
+    ~GPS() {} /// = default; @todo re-add once MSVC supports default/delete syntax.
 
 public slots:
     /*!
@@ -50,6 +50,4 @@ private:
 
     /// The GPS Nep.
     GPS_Neo m_gps_neo;
-
 };
-

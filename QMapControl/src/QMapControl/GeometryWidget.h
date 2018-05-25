@@ -1,27 +1,27 @@
 /*
-*
-* This file is part of QMapControl,
-* an open-source cross-platform map widget
-*
-* Copyright (C) 2007 - 2008 Kai Winter
-*
-* This program is free software: you can redistribute it and/or modify
-* it under the terms of the GNU Lesser General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU Lesser General Public License for more details.
-*
-* You should have received a copy of the GNU Lesser General Public License
-* along with QMapControl. If not, see <http://www.gnu.org/licenses/>.
-*
-* Contact e-mail: kaiwinter@gmx.de
-* Program URL   : http://qmapcontrol.sourceforge.net/
-*
-*/
+ *
+ * This file is part of QMapControl,
+ * an open-source cross-platform map widget
+ *
+ * Copyright (C) 2007 - 2008 Kai Winter
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with QMapControl. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Contact e-mail: kaiwinter@gmx.de
+ * Program URL   : http://qmapcontrol.sourceforge.net/
+ *
+ */
 
 #pragma once
 
@@ -29,59 +29,71 @@
 #include <QWidget>
 
 // Local includes.
-#include "qmapcontrol_global.h"
 #include "Geometry.h"
 #include "Point.h"
+#include "qmapcontrol_global.h"
 
 namespace qmapcontrol
 {
     //! A geometric point to draw widgets into maps.
     /*!
-    * This class can be used to draw your QWidgets into maps.
-    *
-    * But keep in mind, that widgets always are drawn on top of all layers.
-    * You also have to handle click events yourself.
-    *
-    * @author Kai Winter <kaiwinter@gmx.de>
-    * @author Chris Stylianou <chris5287@gmail.com>
-    */
+     * This class can be used to draw your QWidgets into maps.
+     *
+     * But keep in mind, that widgets always are drawn on top of all layers.
+     * You also have to handle click events yourself.
+     *
+     * @author Kai Winter <kaiwinter@gmx.de>
+     * @author Chris Stylianou <chris5287@gmail.com>
+     */
     class QMAPCONTROL_EXPORT GeometryWidget : public Geometry
     {
         Q_OBJECT
     public:
         //! Constructor.
         /*!
-        * This constructor creates a point which will display the given widget.
-        * @note IMPORTANT: You have to set the QMapControl as parent to the widget before this is constructed.
-        * @note IMPORTANT: You have to set the size of the widget before this is constructed.
-        * @param longitude The longitude coordinate (x).
-        * @param latitude The latitude coordinate (y).
-        * @param widget The widget to be displayed by this point.
-        * @param zoom_minimum The minimum zoom level to show this geometry at.
-        * @param zoom_maximum The maximum zoom level to show this geometry at.
-        */
-        GeometryWidget(const qreal& longitude, const qreal& latitude, QWidget* widget, const int& zoom_minimum = 0, const int& zoom_maximum = 17);
+         * This constructor creates a point which will display the given widget.
+         * @note IMPORTANT: You have to set the QMapControl as parent to the widget before this is
+         * constructed.
+         * @note IMPORTANT: You have to set the size of the widget before this is constructed.
+         * @param longitude The longitude coordinate (x).
+         * @param latitude The latitude coordinate (y).
+         * @param widget The widget to be displayed by this point.
+         * @param zoom_minimum The minimum zoom level to show this geometry at.
+         * @param zoom_maximum The maximum zoom level to show this geometry at.
+         */
+        GeometryWidget(const qreal& longitude,
+                       const qreal& latitude,
+                       QWidget* widget,
+                       const int& zoom_minimum = 0,
+                       const int& zoom_maximum = 17);
 
         //! Constructor.
         /*!
-        * This constructor creates a point which will display the given widget.
-        * @note IMPORTANT: You have to set the QMapControl as parent to the widget before this is constructed.
-        * @note IMPORTANT: You have to set the size of the widget before this is constructed.
-        * @param point_coord The longitude/latitude coordinate (x/y).
-        * @param widget The widget to be displayed by this point.
-        * @param zoom_minimum The minimum zoom level to show this geometry at.
-        * @param zoom_maximum The maximum zoom level to show this geometry at.
-        */
-        GeometryWidget(const PointWorldCoord& point_coord, QWidget* widget, const int& zoom_minimum = 0, const int& zoom_maximum = 17);
+         * This constructor creates a point which will display the given widget.
+         * @note IMPORTANT: You have to set the QMapControl as parent to the widget before this is
+         * constructed.
+         * @note IMPORTANT: You have to set the size of the widget before this is constructed.
+         * @param point_coord The longitude/latitude coordinate (x/y).
+         * @param widget The widget to be displayed by this point.
+         * @param zoom_minimum The minimum zoom level to show this geometry at.
+         * @param zoom_maximum The maximum zoom level to show this geometry at.
+         */
+        GeometryWidget(const PointWorldCoord& point_coord,
+                       QWidget* widget,
+                       const int& zoom_minimum = 0,
+                       const int& zoom_maximum = 17);
 
         //! Disable copy constructor.
-        ///GeometryPointWidget(const GeometryPointWidget&) = delete; @todo re-add once MSVC supports default/delete syntax.
+        /// GeometryPointWidget(const GeometryPointWidget&) = delete; @todo re-add once MSVC
+        /// supports default/delete syntax.
 
         //! Disable copy assignment.
-        ///GeometryPointWidget& operator=(const GeometryPointWidget&) = delete; @todo re-add once MSVC supports default/delete syntax.
+        /// GeometryPointWidget& operator=(const GeometryPointWidget&) = delete; @todo re-add once
+        /// MSVC supports default/delete syntax.
 
         //! Destructor.
-        virtual ~GeometryWidget() { } /// = default; @todo re-add once MSVC supports default/delete syntax.
+        virtual ~GeometryWidget() {
+        } /// = default; @todo re-add once MSVC supports default/delete syntax.
 
         /*!
          * Fetches the longitude/latitude coordinate (x/y).
@@ -163,10 +175,13 @@ namespace qmapcontrol
         /*!
          * Draws the geometry to a pixmap using the provided painter.
          * @param painter The painter that will draw to the pixmap.
-         * @param backbuffer_rect_coord Only draw geometries that are contained in the backbuffer rect (world coordinates).
+         * @param backbuffer_rect_coord Only draw geometries that are contained in the backbuffer
+         * rect (world coordinates).
          * @param controller_zoom The current controller zoom.
          */
-        void draw(QPainter& painter, const RectWorldCoord& backbuffer_rect_coord, const int& controller_zoom) final;
+        void draw(QPainter& painter,
+                  const RectWorldCoord& backbuffer_rect_coord,
+                  const int& controller_zoom) final;
 
     private:
         /*!
@@ -178,10 +193,12 @@ namespace qmapcontrol
 
     private:
         //! Disable copy constructor.
-        GeometryWidget(const GeometryWidget&); /// @todo remove once MSVC supports default/delete syntax.
+        GeometryWidget(const GeometryWidget&); /// @todo remove once MSVC supports default/delete
+                                               /// syntax.
 
         //! Disable copy assignment.
-        GeometryWidget& operator=(const GeometryWidget&); /// @todo remove once MSVC supports default/delete syntax.
+        GeometryWidget& operator=(const GeometryWidget&); /// @todo remove once MSVC supports
+                                                          /// default/delete syntax.
 
     private:
         /// The x/y coordinate (longitude/latitude).

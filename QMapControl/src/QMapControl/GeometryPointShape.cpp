@@ -5,22 +5,27 @@
 
 namespace qmapcontrol
 {
-    GeometryPointShape::GeometryPointShape(const qreal& longitude, const qreal& latitude, const QSizeF& size_px, const int& zoom_minimum, const int& zoom_maximum)
+    GeometryPointShape::GeometryPointShape(const qreal& longitude,
+                                           const qreal& latitude,
+                                           const QSizeF& size_px,
+                                           const int& zoom_minimum,
+                                           const int& zoom_maximum)
         : GeometryPoint(PointWorldCoord(longitude, latitude), zoom_minimum, zoom_maximum),
           m_size_px(size_px),
           m_alignment_type(AlignmentType::Middle),
           m_rotation(0.0)
     {
-
     }
 
-    GeometryPointShape::GeometryPointShape(const PointWorldCoord& point_coord, const QSizeF& size_px, const int& zoom_minimum, const int& zoom_maximum)
+    GeometryPointShape::GeometryPointShape(const PointWorldCoord& point_coord,
+                                           const QSizeF& size_px,
+                                           const int& zoom_minimum,
+                                           const int& zoom_maximum)
         : GeometryPoint(point_coord, zoom_minimum, zoom_maximum),
           m_size_px(size_px),
           m_alignment_type(AlignmentType::Middle),
           m_rotation(0.0)
     {
-
     }
 
     void GeometryPointShape::setPen(const std::shared_ptr<QPen>& pen)
@@ -89,7 +94,8 @@ namespace qmapcontrol
         return m_alignment_type;
     }
 
-    void GeometryPointShape::setAlignmentType(const AlignmentType& alignment_type, const bool& update_shape)
+    void GeometryPointShape::setAlignmentType(const AlignmentType& alignment_type,
+                                              const bool& update_shape)
     {
         // Set the alignment type.
         m_alignment_type = alignment_type;
@@ -137,13 +143,17 @@ namespace qmapcontrol
         const PointWorldPx point_px(projection::get().toPointWorldPx(coord(), controller_zoom));
 
         // Calculate the top-left point.
-        const PointWorldPx top_left_point_px(calculateTopLeftPoint(point_px, m_alignment_type, m_size_px));
+        const PointWorldPx top_left_point_px(
+            calculateTopLeftPoint(point_px, m_alignment_type, m_size_px));
 
         // Calculate the bottom-right point.
-        const PointWorldPx bottom_right_point_px(top_left_point_px.x() + m_size_px.width(), top_left_point_px.y() + m_size_px.height());
+        const PointWorldPx bottom_right_point_px(top_left_point_px.x() + m_size_px.width(),
+                                                 top_left_point_px.y() + m_size_px.height());
 
         // Return the converted coord points.
-        return RectWorldCoord(projection::get().toPointWorldCoord(top_left_point_px, controller_zoom), projection::get().toPointWorldCoord(bottom_right_point_px, controller_zoom));
+        return RectWorldCoord(
+            projection::get().toPointWorldCoord(top_left_point_px, controller_zoom),
+            projection::get().toPointWorldCoord(bottom_right_point_px, controller_zoom));
     }
 
     void GeometryPointShape::updateShape()

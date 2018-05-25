@@ -4,8 +4,8 @@
 #include <QtWidgets/QMainWindow>
 
 // QMapControl includes.
-#include <QMapControl/QMapControl.h>
 #include <QMapControl/Geometry.h>
+#include <QMapControl/QMapControl.h>
 
 using namespace qmapcontrol;
 
@@ -25,13 +25,15 @@ public:
     LinesAndPoints(QWidget* parent = 0);
 
     //! Disable copy constructor.
-    ///LinesAndPoints(const LinesAndPoints&) = delete; @todo re-add once MSVC supports default/delete syntax.
+    /// LinesAndPoints(const LinesAndPoints&) = delete; @todo re-add once MSVC supports
+    /// default/delete syntax.
 
     //! Disable copy assignment.
-    ///LinesAndPoints& operator=(const LinesAndPoints&) = delete; @todo re-add once MSVC supports default/delete syntax.
+    /// LinesAndPoints& operator=(const LinesAndPoints&) = delete; @todo re-add once MSVC supports
+    /// default/delete syntax.
 
     //! Destructor.
-    ~LinesAndPoints() { } /// = default; @todo re-add once MSVC supports default/delete syntax.
+    ~LinesAndPoints() {} /// = default; @todo re-add once MSVC supports default/delete syntax.
 
 public slots:
     /*!

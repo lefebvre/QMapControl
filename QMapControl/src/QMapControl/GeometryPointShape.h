@@ -24,14 +24,15 @@
 #pragma once
 
 // Local includes.
-#include "qmapcontrol_global.h"
 #include "GeometryPoint.h"
+#include "qmapcontrol_global.h"
 
 namespace qmapcontrol
 {
     //! Draws a shape at a specific point onto the map.
     /*!
-     * This class draws a shape at a specific point onto the map. GeometryPointShape is an abstract (non-instantiable) class.
+     * This class draws a shape at a specific point onto the map. GeometryPointShape is an abstract
+     * (non-instantiable) class.
      *
      * @author Kai Winter <kaiwinter@gmx.de>
      * @author Chris Stylianou <chris5287@gmail.com>
@@ -49,7 +50,11 @@ namespace qmapcontrol
          * @param zoom_minimum The minimum zoom level to show this geometry at.
          * @param zoom_maximum The maximum zoom level to show this geometry at.
          */
-        GeometryPointShape(const qreal& longitude, const qreal& latitude, const QSizeF& size_px, const int& zoom_minimum = 0, const int& zoom_maximum = 17);
+        GeometryPointShape(const qreal& longitude,
+                           const qreal& latitude,
+                           const QSizeF& size_px,
+                           const int& zoom_minimum = 0,
+                           const int& zoom_maximum = 17);
 
         //! Constructor.
         /*!
@@ -59,24 +64,33 @@ namespace qmapcontrol
          * @param zoom_minimum The minimum zoom level to show this geometry at.
          * @param zoom_maximum The maximum zoom level to show this geometry at.
          */
-        GeometryPointShape(const PointWorldCoord& point_coord, const QSizeF& size_px, const int& zoom_minimum = 0, const int& zoom_maximum = 17);
+        GeometryPointShape(const PointWorldCoord& point_coord,
+                           const QSizeF& size_px,
+                           const int& zoom_minimum = 0,
+                           const int& zoom_maximum = 17);
 
     public:
         //! Disable copy constructor.
-        ///GeometryPointShape(const GeometryPointShape&) = delete; @todo re-add once MSVC supports default/delete syntax.
+        /// GeometryPointShape(const GeometryPointShape&) = delete; @todo re-add once MSVC supports
+        /// default/delete syntax.
 
         //! Disable copy assignment.
-        ///GeometryPointShape& operator=(const GeometryPointShape&) = delete; @todo re-add once MSVC supports default/delete syntax.
+        /// GeometryPointShape& operator=(const GeometryPointShape&) = delete; @todo re-add once
+        /// MSVC supports default/delete syntax.
 
         //! Destructor.
-        virtual ~GeometryPointShape() { } /// = default; @todo re-add once MSVC supports default/delete syntax.
+        virtual ~GeometryPointShape() {
+        } /// = default; @todo re-add once MSVC supports default/delete syntax.
 
     private:
         //! Disable copy constructor.
-        GeometryPointShape(const GeometryPointShape&); /// @todo remove once MSVC supports default/delete syntax.
+        GeometryPointShape(const GeometryPointShape&); /// @todo remove once MSVC supports
+                                                       /// default/delete syntax.
 
         //! Disable copy assignment.
-        GeometryPointShape& operator=(const GeometryPointShape&); /// @todo remove once MSVC supports default/delete syntax.
+        GeometryPointShape& operator=(const GeometryPointShape&); /// @todo remove once MSVC
+                                                                  /// supports default/delete
+                                                                  /// syntax.
 
     public:
         /*!
@@ -127,7 +141,8 @@ namespace qmapcontrol
          * @param alignment_type The alignment type to set.
          * @param update_shape Whether updateShape() should be called at the end of this function.
          */
-        void setAlignmentType(const AlignmentType& alignment_type = AlignmentType::Middle, const bool& update_shape = true);
+        void setAlignmentType(const AlignmentType& alignment_type = AlignmentType::Middle,
+                              const bool& update_shape = true);
 
         /*!
          * Fetches the rotation of the shape (degrees).

@@ -4,8 +4,8 @@
 #include <QtCore/QObject>
 
 // QMapControl includes.
-#include <QMapControl/Point.h>
 #include <QMapControl/GPS_Position.h>
+#include <QMapControl/Point.h>
 
 using namespace qmapcontrol;
 
@@ -18,7 +18,7 @@ using namespace qmapcontrol;
  * @author Kai Winter <kaiwinter@gmx.de>
  * @author Chris Stylianou <chris5287@gmail.com>
  */
-class GPS_Neo: public QObject
+class GPS_Neo : public QObject
 {
     Q_OBJECT
 
@@ -31,13 +31,14 @@ public:
     explicit GPS_Neo(QObject* parent = 0);
 
     //! Disable copy constructor.
-    ///GPS_Neo(const GPS_Neo&) = delete; @todo re-add once MSVC supports default/delete syntax.
+    /// GPS_Neo(const GPS_Neo&) = delete; @todo re-add once MSVC supports default/delete syntax.
 
     //! Disable copy assignment.
-    ///GPS_Neo& operator=(const GPS_Neo&) = delete; @todo re-add once MSVC supports default/delete syntax.
+    /// GPS_Neo& operator=(const GPS_Neo&) = delete; @todo re-add once MSVC supports default/delete
+    /// syntax.
 
     //! Destructor.
-    ~GPS_Neo() { } /// = default; @todo re-add once MSVC supports default/delete syntax.
+    ~GPS_Neo() {} /// = default; @todo re-add once MSVC supports default/delete syntax.
 
     /*!
      * Starts the gps data collection.

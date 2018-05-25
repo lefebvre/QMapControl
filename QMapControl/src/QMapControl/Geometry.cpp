@@ -1,33 +1,35 @@
 /*
-*
-* This file is part of QMapControl,
-* an open-source cross-platform map widget
-*
-* Copyright (C) 2007 - 2008 Kai Winter
-*
-* This program is free software: you can redistribute it and/or modify
-* it under the terms of the GNU Lesser General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU Lesser General Public License for more details.
-*
-* You should have received a copy of the GNU Lesser General Public License
-* along with QMapControl. If not, see <http://www.gnu.org/licenses/>.
-*
-* Contact e-mail: kaiwinter@gmx.de
-* Program URL   : http://qmapcontrol.sourceforge.net/
-*
-*/
+ *
+ * This file is part of QMapControl,
+ * an open-source cross-platform map widget
+ *
+ * Copyright (C) 2007 - 2008 Kai Winter
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with QMapControl. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Contact e-mail: kaiwinter@gmx.de
+ * Program URL   : http://qmapcontrol.sourceforge.net/
+ *
+ */
 
 #include "Geometry.h"
 
 namespace qmapcontrol
 {
-    Geometry::Geometry(const GeometryType& geometry_type, const int& zoom_minimum, const int& zoom_maximum)
+    Geometry::Geometry(const GeometryType& geometry_type,
+                       const int& zoom_minimum,
+                       const int& zoom_maximum)
         : m_geometry_type(geometry_type),
           m_zoom_minimum(zoom_minimum),
           m_zoom_maximum(zoom_maximum),
@@ -37,7 +39,6 @@ namespace qmapcontrol
           m_metadata_displayed_alignment_type(AlignmentType::TopRight),
           m_metadata_displayed_alignment_offset_px(5.0)
     {
-
     }
 
     const Geometry::GeometryType& Geometry::geometryType() const
@@ -149,7 +150,10 @@ namespace qmapcontrol
         m_metadata[key] = value;
     }
 
-    void Geometry::setMetadataDisplayed(const std::string& key, const int& zoom_minimum, const AlignmentType& alignment_type, const double& alignment_offset_px)
+    void Geometry::setMetadataDisplayed(const std::string& key,
+                                        const int& zoom_minimum,
+                                        const AlignmentType& alignment_type,
+                                        const double& alignment_offset_px)
     {
         // Set the meta-data key to use.
         m_metadata_displayed_key = key;
@@ -161,7 +165,9 @@ namespace qmapcontrol
         emit requestRedraw();
     }
 
-    PointWorldPx Geometry::calculateTopLeftPoint(const PointWorldPx& point_px, const AlignmentType& alignment_type, const QSizeF& geometry_size_px) const
+    PointWorldPx Geometry::calculateTopLeftPoint(const PointWorldPx& point_px,
+                                                 const AlignmentType& alignment_type,
+                                                 const QSizeF& geometry_size_px) const
     {
         // Default world point to return.
         PointWorldPx top_left_point_px(point_px);

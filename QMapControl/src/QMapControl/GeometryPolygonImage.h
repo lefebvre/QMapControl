@@ -27,8 +27,8 @@
 #include <QtGui/QPixmap>
 
 // Local includes.
-#include "qmapcontrol_global.h"
 #include "GeometryPolygon.h"
+#include "qmapcontrol_global.h"
 
 namespace qmapcontrol
 {
@@ -52,7 +52,11 @@ namespace qmapcontrol
          * @param zoom_minimum The minimum zoom level to show this geometry at.
          * @param zoom_maximum The maximum zoom level to show this geometry at.
          */
-        GeometryPolygonImage(const PointWorldCoord& top_left_coord, const PointWorldCoord& bottom_right_coord, const std::string& filename, const int& zoom_minimum = 0, const int& zoom_maximum = 17);
+        GeometryPolygonImage(const PointWorldCoord& top_left_coord,
+                             const PointWorldCoord& bottom_right_coord,
+                             const std::string& filename,
+                             const int& zoom_minimum = 0,
+                             const int& zoom_maximum = 17);
 
         //! Constructor.
         /*!
@@ -63,32 +67,45 @@ namespace qmapcontrol
          * @param zoom_minimum The minimum zoom level to show this geometry at.
          * @param zoom_maximum The maximum zoom level to show this geometry at.
          */
-        GeometryPolygonImage(const PointWorldCoord& point_top_left, const PointWorldCoord& bottom_right_coord, const QPixmap& image, const int& zoom_minimum = 0, const int& zoom_maximum = 17);
+        GeometryPolygonImage(const PointWorldCoord& point_top_left,
+                             const PointWorldCoord& bottom_right_coord,
+                             const QPixmap& image,
+                             const int& zoom_minimum = 0,
+                             const int& zoom_maximum = 17);
 
         //! Disable copy constructor.
-        ///GeometryPointImageFixed(const GeometryPointImageFixed&) = delete; @todo re-add once MSVC supports default/delete syntax.
+        /// GeometryPointImageFixed(const GeometryPointImageFixed&) = delete; @todo re-add once MSVC
+        /// supports default/delete syntax.
 
         //! Disable copy assignment.
-        ///GeometryPointImageFixed& operator=(const GeometryPointImageFixed&) = delete; @todo re-add once MSVC supports default/delete syntax.
+        /// GeometryPointImageFixed& operator=(const GeometryPointImageFixed&) = delete; @todo
+        /// re-add once MSVC supports default/delete syntax.
 
         //! Destructor.
-        virtual ~GeometryPolygonImage() { } /// = default; @todo re-add once MSVC supports default/delete syntax.
+        virtual ~GeometryPolygonImage() {
+        } /// = default; @todo re-add once MSVC supports default/delete syntax.
 
     private:
         //! Disable copy constructor.
-        GeometryPolygonImage(const GeometryPolygonImage&); /// @todo remove once MSVC supports default/delete syntax.
+        GeometryPolygonImage(const GeometryPolygonImage&); /// @todo remove once MSVC supports
+                                                           /// default/delete syntax.
 
         //! Disable copy assignment.
-        GeometryPolygonImage& operator=(const GeometryPolygonImage&); /// @todo remove once MSVC supports default/delete syntax.
+        GeometryPolygonImage& operator=(const GeometryPolygonImage&); /// @todo remove once MSVC
+                                                                      /// supports default/delete
+                                                                      /// syntax.
 
     public:
         /*!
          * Draws the geometry to a pixmap using the provided painter.
          * @param painter The painter that will draw to the pixmap.
-         * @param backbuffer_rect_coord Only draw geometries that are contained in the backbuffer rect (world coordinates).
+         * @param backbuffer_rect_coord Only draw geometries that are contained in the backbuffer
+         * rect (world coordinates).
          * @param controller_zoom The current controller zoom.
          */
-        void draw(QPainter& painter, const RectWorldCoord& backbuffer_rect_coord, const int& controller_zoom) final;
+        void draw(QPainter& painter,
+                  const RectWorldCoord& backbuffer_rect_coord,
+                  const int& controller_zoom) final;
 
     private:
         /// The image pixmap to draw.

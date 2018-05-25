@@ -4,8 +4,8 @@
 #include <QtWidgets/QPushButton>
 
 // QMapControl includes.
-#include <QMapControl/QMapControl.h>
 #include <QMapControl/GeometryPointImage.h>
+#include <QMapControl/QMapControl.h>
 
 // Local includes.
 #include "gps_modul.h"
@@ -28,13 +28,14 @@ public:
     Multidemo(QWidget* parent = 0);
 
     //! Disable copy constructor.
-    ///Multidemo(const Multidemo&) = delete; @todo re-add once MSVC supports default/delete syntax.
+    /// Multidemo(const Multidemo&) = delete; @todo re-add once MSVC supports default/delete syntax.
 
     //! Disable copy assignment.
-    ///Multidemo& operator=(const Multidemo&) = delete; @todo re-add once MSVC supports default/delete syntax.
+    /// Multidemo& operator=(const Multidemo&) = delete; @todo re-add once MSVC supports
+    /// default/delete syntax.
 
     //! Destructor.
-    ~Multidemo() { } /// = default; @todo re-add once MSVC supports default/delete syntax.
+    ~Multidemo() {} /// = default; @todo re-add once MSVC supports default/delete syntax.
 
 private:
     /*!
@@ -87,7 +88,8 @@ private slots:
      * Slot to handle geometry selection events.
      * @param selected_geometries The geometries that have been selected.
      */
-    void geometriesSelectedEvent(std::map<std::string, std::vector<std::shared_ptr<Geometry>>> selected_geometries);
+    void geometriesSelectedEvent(
+        std::map<std::string, std::vector<std::shared_ptr<Geometry>>> selected_geometries);
 
     /*!
      * Slot to handle a geometry that has been clicked.
@@ -101,7 +103,9 @@ private slots:
      * @param press_coordinate The corresponding world coordinate of the mouse press.
      * @param release_coordinate The corresponding world coordinate of the mouse release.
      */
-    void main_mouseEventReleaseCoordinate(QMouseEvent* mouse_event, PointWorldCoord press_coordinate, PointWorldCoord release_coordinate);
+    void main_mouseEventReleaseCoordinate(QMouseEvent* mouse_event,
+                                          PointWorldCoord press_coordinate,
+                                          PointWorldCoord release_coordinate);
 
     /*!
      * Slot to handle mouse release events in the main map control.

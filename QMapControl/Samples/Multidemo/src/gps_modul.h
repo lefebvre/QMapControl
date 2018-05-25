@@ -25,13 +25,14 @@ public:
     explicit GPS_Modul(QObject* parent = 0);
 
     //! Disable copy constructor.
-    ///GPS_Modul(const GPS_Modul&) = delete; @todo re-add once MSVC supports default/delete syntax.
+    /// GPS_Modul(const GPS_Modul&) = delete; @todo re-add once MSVC supports default/delete syntax.
 
     //! Disable copy assignment.
-    ///GPS_Modul& operator=(const GPS_Modul&) = delete; @todo re-add once MSVC supports default/delete syntax.
+    /// GPS_Modul& operator=(const GPS_Modul&) = delete; @todo re-add once MSVC supports
+    /// default/delete syntax.
 
     //! Destructor.
-    ~GPS_Modul() { } /// = default; @todo re-add once MSVC supports default/delete syntax.
+    ~GPS_Modul() {} /// = default; @todo re-add once MSVC supports default/delete syntax.
 
     /*!
      * Starts the GPS Modul.

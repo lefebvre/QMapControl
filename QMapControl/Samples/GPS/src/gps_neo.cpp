@@ -5,12 +5,7 @@
 #include <QtCore/QFile>
 #include <QtCore/QTimer>
 
-GPS_Neo::GPS_Neo(QObject* parent)
-    : QObject(parent),
-      m_running(false)
-{
-
-}
+GPS_Neo::GPS_Neo(QObject* parent) : QObject(parent), m_running(false) {}
 
 void GPS_Neo::start()
 {
@@ -63,7 +58,8 @@ void GPS_Neo::tick()
         const GPS_Position pos = process_line(line);
 
         // Emit our new position fetched.
-        emit new_position(pos.getTime(), PointWorldCoord(pos.getLongitudeCoord(), pos.getLatitudeCoord()));
+        emit new_position(pos.getTime(),
+                          PointWorldCoord(pos.getLongitudeCoord(), pos.getLatitudeCoord()));
 
         // Are we still running?
         if(m_running)

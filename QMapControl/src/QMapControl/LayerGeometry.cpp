@@ -1,52 +1,56 @@
 /*
-*
-* This file is part of QMapControl,
-* an open-source cross-platform map widget
-*
-* Copyright (C) 2007 - 2008 Kai Winter
-*
-* This program is free software: you can redistribute it and/or modify
-* it under the terms of the GNU Lesser General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU Lesser General Public License for more details.
-*
-* You should have received a copy of the GNU Lesser General Public License
-* along with QMapControl. If not, see <http://www.gnu.org/licenses/>.
-*
-* Contact e-mail: kaiwinter@gmx.de
-* Program URL   : http://qmapcontrol.sourceforge.net/
-*
-*/
+ *
+ * This file is part of QMapControl,
+ * an open-source cross-platform map widget
+ *
+ * Copyright (C) 2007 - 2008 Kai Winter
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with QMapControl. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Contact e-mail: kaiwinter@gmx.de
+ * Program URL   : http://qmapcontrol.sourceforge.net/
+ *
+ */
 
 #include "LayerGeometry.h"
 
 // Local includes.
-#include "GeometryPoint.h"
 #include "GeometryLineString.h"
+#include "GeometryPoint.h"
 #include "GeometryPolygon.h"
 #include "Projection.h"
 
 namespace qmapcontrol
 {
-    LayerGeometry::LayerGeometry(const std::string& name, const int& zoom_minimum, const int& zoom_maximum, QObject* parent)
+    LayerGeometry::LayerGeometry(const std::string& name,
+                                 const int& zoom_minimum,
+                                 const int& zoom_maximum,
+                                 QObject* parent)
         : Layer(LayerType::LayerGeometry, name, zoom_minimum, zoom_maximum, parent),
-          m_geometries(50, RectWorldCoord(PointWorldCoord(-180.0, 90.0), PointWorldCoord(180.0, -90.0)))
+          m_geometries(50,
+                       RectWorldCoord(PointWorldCoord(-180.0, 90.0), PointWorldCoord(180.0, -90.0)))
     {
-
     }
 
-    const std::set< std::shared_ptr<Geometry> > LayerGeometry::getGeometries(const RectWorldCoord& range_coord) const
+    const std::set<std::shared_ptr<Geometry>>
+    LayerGeometry::getGeometries(const RectWorldCoord& range_coord) const
     {
         // Gain a read lock to protect the geometries container.
         QReadLocker locker(&m_geometries_mutex);
 
         // The geometries container to return.
-        std::set< std::shared_ptr<Geometry> > return_geometries;
+        std::set<std::shared_ptr<Geometry>> return_geometries;
 
         // Populate the geometries container.
         m_geometries.query(return_geometries, range_coord);
@@ -55,7 +59,7 @@ namespace qmapcontrol
         return return_geometries;
     }
 
-    const std::set< std::shared_ptr<GeometryWidget> > LayerGeometry::getGeometryWidgets() const
+    const std::set<std::shared_ptr<GeometryWidget>> LayerGeometry::getGeometryWidgets() const
     {
         // Gain a read lock to protect the geometry widgets container.
         QReadLocker locker(&m_geometry_widgets_mutex);
@@ -64,7 +68,8 @@ namespace qmapcontrol
         return m_geometry_widgets;
     }
 
-    bool LayerGeometry::containsGeometry(const std::shared_ptr<Geometry>& geometry, const int& controller_zoom) const
+    bool LayerGeometry::containsGeometry(const std::shared_ptr<Geometry>& geometry,
+                                         const int& controller_zoom) const
     {
         // Default return answer.
         bool contains_geometry(false);
@@ -79,7 +84,9 @@ namespace qmapcontrol
                 const auto geometry_widgets = getGeometryWidgets();
 
                 // Does the list contain the geometry widget?
-                contains_geometry = (std::find(geometry_widgets.begin(), geometry_widgets.end(), geometry) != geometry_widgets.end());
+                contains_geometry
+                    = (std::find(geometry_widgets.begin(), geometry_widgets.end(), geometry)
+                       != geometry_widgets.end());
             }
             // Else it must be a Geometry object.
             else
@@ -88,7 +95,8 @@ namespace qmapcontrol
                 const auto geometries = getGeometries(geometry->boundingBox(controller_zoom));
 
                 // Does the list contain the geometry?
-                contains_geometry = (std::find(geometries.begin(), geometries.end(), geometry) != geometries.end());
+                contains_geometry = (std::find(geometries.begin(), geometries.end(), geometry)
+                                     != geometries.end());
             }
         }
 
@@ -96,7 +104,8 @@ namespace qmapcontrol
         return contains_geometry;
     }
 
-    void LayerGeometry::addGeometry(const std::shared_ptr<Geometry>& geometry, const bool& disable_redraw)
+    void LayerGeometry::addGeometry(const std::shared_ptr<Geometry>& geometry,
+                                    const bool& disable_redraw)
     {
         // Check the geometry is valid.
         if(geometry != nullptr)
@@ -111,7 +120,8 @@ namespace qmapcontrol
                     QWriteLocker locker(&m_geometries_mutex);
 
                     // Add the geometry.
-                    m_geometries.insert(std::static_pointer_cast<GeometryPoint>(geometry)->coord(), geometry);
+                    m_geometries.insert(std::static_pointer_cast<GeometryPoint>(geometry)->coord(),
+                                        geometry);
 
                     // Finished.
                     break;
@@ -138,7 +148,8 @@ namespace qmapcontrol
                     QWriteLocker locker(&m_geometries_mutex);
 
                     // Loop through each GeometryLineString point and add it to the container.
-                    for(const auto point : std::static_pointer_cast<GeometryLineString>(geometry)->points())
+                    for(const auto point :
+                        std::static_pointer_cast<GeometryLineString>(geometry)->points())
                     {
                         // Add the geometry.
                         m_geometries.insert(point, geometry);
@@ -155,7 +166,8 @@ namespace qmapcontrol
                     QWriteLocker locker(&m_geometries_mutex);
 
                     // Loop through each GeometryPolygon point and add it to the container.
-                    for(const auto point : std::static_pointer_cast<GeometryPolygon>(geometry)->points())
+                    for(const auto point :
+                        std::static_pointer_cast<GeometryPolygon>(geometry)->points())
                     {
                         // Add the geometry.
                         m_geometries.insert(point, geometry);
@@ -179,7 +191,8 @@ namespace qmapcontrol
         }
     }
 
-    void LayerGeometry::removeGeometry(const std::shared_ptr<Geometry>& geometry, const bool& disable_redraw)
+    void LayerGeometry::removeGeometry(const std::shared_ptr<Geometry>& geometry,
+                                       const bool& disable_redraw)
     {
         // Check the geometry is valid.
         if(geometry != nullptr)
@@ -197,7 +210,8 @@ namespace qmapcontrol
                     QObject::disconnect(geometry.get(), 0, this, 0);
 
                     // Remove the geometry from the list.
-                    m_geometries.erase(std::static_pointer_cast<GeometryPoint>(geometry)->coord(), geometry);
+                    m_geometries.erase(std::static_pointer_cast<GeometryPoint>(geometry)->coord(),
+                                       geometry);
                 }
 
                 // Is it a GeometryPointWidget.
@@ -210,7 +224,8 @@ namespace qmapcontrol
                     QObject::disconnect(geometry.get(), 0, this, 0);
 
                     // Find the object in the container.
-                    const auto itr_find = m_geometry_widgets.find(std::static_pointer_cast<GeometryWidget>(geometry));
+                    const auto itr_find = m_geometry_widgets.find(
+                        std::static_pointer_cast<GeometryWidget>(geometry));
                     if(itr_find != m_geometry_widgets.end())
                     {
                         // Remove the geometry from the list.
@@ -232,7 +247,8 @@ namespace qmapcontrol
                     QObject::disconnect(geometry.get(), 0, this, 0);
 
                     // Loop through each GeometryLineString point and remove it to the container.
-                    for(const auto point : std::static_pointer_cast<GeometryLineString>(geometry)->points())
+                    for(const auto point :
+                        std::static_pointer_cast<GeometryLineString>(geometry)->points())
                     {
                         // Remove the geometry.
                         m_geometries.erase(point, geometry);
@@ -252,7 +268,8 @@ namespace qmapcontrol
                     QObject::disconnect(geometry.get(), 0, this, 0);
 
                     // Loop through each GeometryPolygon point and remove it to the container.
-                    for(const auto point : std::static_pointer_cast<GeometryPolygon>(geometry)->points())
+                    for(const auto point :
+                        std::static_pointer_cast<GeometryPolygon>(geometry)->points())
                     {
                         // Remove the geometry.
                         m_geometries.erase(point, geometry);
@@ -283,10 +300,13 @@ namespace qmapcontrol
         m_geometry_widgets.clear();
     }
 
-    void LayerGeometry::mousePressEvent(const QMouseEvent* mouse_event, const PointWorldCoord& mouse_point_coord, const int& controller_zoom) const
+    void LayerGeometry::mousePressEvent(const QMouseEvent* mouse_event,
+                                        const PointWorldCoord& mouse_point_coord,
+                                        const int& controller_zoom) const
     {
         // Are mouse events enabled, is the layer visible and is it a mouse press event?
-        if(isMouseEventsEnabled() && isVisible(controller_zoom) && mouse_event->type() == QEvent::MouseButtonPress)
+        if(isMouseEventsEnabled() && isVisible(controller_zoom)
+           && mouse_event->type() == QEvent::MouseButtonPress)
         {
             // Is this a left-click event?
             if(mouse_event->button() == Qt::LeftButton)
@@ -295,16 +315,26 @@ namespace qmapcontrol
                 const qreal fuzzy_factor_px = 5.0;
 
                 // Calculate the mouse press world point in pixels.
-                const PointWorldPx mouse_point_px(projection::get().toPointWorldPx(mouse_point_coord, controller_zoom));
+                const PointWorldPx mouse_point_px(
+                    projection::get().toPointWorldPx(mouse_point_coord, controller_zoom));
 
-                // Calculate a rect around the mouse point with a 'fuzzy-factor' around it in pixels.
-                const RectWorldPx mouse_rect_px(PointWorldPx(mouse_point_px.x() - fuzzy_factor_px, mouse_point_px.y() - fuzzy_factor_px), PointWorldPx(mouse_point_px.x() + fuzzy_factor_px, mouse_point_px.y() + fuzzy_factor_px));
+                // Calculate a rect around the mouse point with a 'fuzzy-factor' around it in
+                // pixels.
+                const RectWorldPx mouse_rect_px(PointWorldPx(mouse_point_px.x() - fuzzy_factor_px,
+                                                             mouse_point_px.y() - fuzzy_factor_px),
+                                                PointWorldPx(mouse_point_px.x() + fuzzy_factor_px,
+                                                             mouse_point_px.y() + fuzzy_factor_px));
 
-                // Calculate a rect around the mouse point with a 'fuzzy-factor' around it in coordinates.
-                const RectWorldCoord mouse_rect_coord(projection::get().toPointWorldCoord(mouse_rect_px.topLeftPx(), controller_zoom), projection::get().toPointWorldCoord(mouse_rect_px.bottomRightPx(), controller_zoom));
+                // Calculate a rect around the mouse point with a 'fuzzy-factor' around it in
+                // coordinates.
+                const RectWorldCoord mouse_rect_coord(
+                    projection::get().toPointWorldCoord(mouse_rect_px.topLeftPx(), controller_zoom),
+                    projection::get().toPointWorldCoord(mouse_rect_px.bottomRightPx(),
+                                                        controller_zoom));
 
                 // Create a QGraphicsRectItem to perform touches check, as required.
-                const GeometryPolygon touches_rect_coord({ mouse_rect_coord.topLeftCoord(), mouse_rect_coord.bottomRightCoord() });
+                const GeometryPolygon touches_rect_coord(
+                    { mouse_rect_coord.topLeftCoord(), mouse_rect_coord.bottomRightCoord() });
 
                 // Check each geometry to see it is contained in our touch area.
                 for(const auto& geometry : getGeometries(mouse_rect_coord))
@@ -320,13 +350,19 @@ namespace qmapcontrol
         }
     }
 
-    void LayerGeometry::draw(QPainter& painter, const RectWorldPx& backbuffer_rect_px, const int& controller_zoom) const
+    void LayerGeometry::draw(QPainter& painter,
+                             const RectWorldPx& backbuffer_rect_px,
+                             const int& controller_zoom) const
     {
         // Check the layer is visible.
         if(isVisible(controller_zoom))
         {
             // Calculate the world coordinates.
-            const RectWorldCoord backbuffer_rect_coord(projection::get().toPointWorldCoord(backbuffer_rect_px.topLeftPx(), controller_zoom), projection::get().toPointWorldCoord(backbuffer_rect_px.bottomRightPx(), controller_zoom));
+            const RectWorldCoord backbuffer_rect_coord(
+                projection::get().toPointWorldCoord(backbuffer_rect_px.topLeftPx(),
+                                                    controller_zoom),
+                projection::get().toPointWorldCoord(backbuffer_rect_px.bottomRightPx(),
+                                                    controller_zoom));
 
             // Save the current painter's state.
             painter.save();
@@ -343,7 +379,8 @@ namespace qmapcontrol
         }
     }
 
-    void LayerGeometry::moveGeometryWidgets(const PointPx& offset_px, const int& controller_zoom) const
+    void LayerGeometry::moveGeometryWidgets(const PointPx& offset_px,
+                                            const int& controller_zoom) const
     {
         // Check the layer is visible.
         if(isVisible(controller_zoom))
@@ -356,5 +393,4 @@ namespace qmapcontrol
             }
         }
     }
-
 }

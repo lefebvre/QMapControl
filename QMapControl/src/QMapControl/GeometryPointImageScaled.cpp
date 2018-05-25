@@ -11,22 +11,35 @@ namespace qmapcontrol
         std::unique_ptr<QPixmap> m_image_null = nullptr;
     }
 
-    GeometryPointImageScaled::GeometryPointImageScaled(const PointWorldCoord& point_coord, const std::shared_ptr<QPixmap>& image, const int& base_zoom, const int& zoom_minimum, const int& zoom_maximum)
-        : GeometryPointShapeScaled(point_coord, image->size(), base_zoom, zoom_minimum, zoom_maximum),
+    GeometryPointImageScaled::GeometryPointImageScaled(const PointWorldCoord& point_coord,
+                                                       const std::shared_ptr<QPixmap>& image,
+                                                       const int& base_zoom,
+                                                       const int& zoom_minimum,
+                                                       const int& zoom_maximum)
+        : GeometryPointShapeScaled(
+              point_coord, image->size(), base_zoom, zoom_minimum, zoom_maximum),
           m_image(image)
     {
-
     }
 
-    GeometryPointImageScaled::GeometryPointImageScaled(const PointWorldCoord& point_coord, const QPixmap& image, const int& base_zoom, const int& zoom_minimum, const int& zoom_maximum)
-        : GeometryPointShapeScaled(point_coord, image.size(), base_zoom, zoom_minimum, zoom_maximum),
+    GeometryPointImageScaled::GeometryPointImageScaled(const PointWorldCoord& point_coord,
+                                                       const QPixmap& image,
+                                                       const int& base_zoom,
+                                                       const int& zoom_minimum,
+                                                       const int& zoom_maximum)
+        : GeometryPointShapeScaled(
+              point_coord, image.size(), base_zoom, zoom_minimum, zoom_maximum),
           m_image(std::make_shared<QPixmap>(image))
     {
-
     }
 
-    GeometryPointImageScaled::GeometryPointImageScaled(const PointWorldCoord& point_coord, const std::string& filename, const int& base_zoom, const int& zoom_minimum, const int& zoom_maximum)
-        : GeometryPointShapeScaled(point_coord, QSizeF(0, 0), base_zoom, zoom_minimum, zoom_maximum),
+    GeometryPointImageScaled::GeometryPointImageScaled(const PointWorldCoord& point_coord,
+                                                       const std::string& filename,
+                                                       const int& base_zoom,
+                                                       const int& zoom_minimum,
+                                                       const int& zoom_maximum)
+        : GeometryPointShapeScaled(
+              point_coord, QSizeF(0, 0), base_zoom, zoom_minimum, zoom_maximum),
           m_image(std::make_shared<QPixmap>(filename.c_str()))
     {
         // Update the image size (as we have to wait for it to be loaded in the constructor).
@@ -55,7 +68,8 @@ namespace qmapcontrol
         }
     }
 
-    void GeometryPointImageScaled::setImage(const std::shared_ptr<QPixmap>& new_image, const bool& update_shape)
+    void GeometryPointImageScaled::setImage(const std::shared_ptr<QPixmap>& new_image,
+                                            const bool& update_shape)
     {
         // Set the image pixmap.
         m_image = new_image;
@@ -75,7 +89,9 @@ namespace qmapcontrol
         setSizePx(m_image->size(), update_shape);
     }
 
-    void GeometryPointImageScaled::draw(QPainter& painter, const RectWorldCoord& backbuffer_rect_coord, const int& controller_zoom)
+    void GeometryPointImageScaled::draw(QPainter& painter,
+                                        const RectWorldCoord& backbuffer_rect_coord,
+                                        const int& controller_zoom)
     {
         // Check the geometry is visible.
         if(isVisible(controller_zoom))
@@ -85,26 +101,36 @@ namespace qmapcontrol
             if(backbuffer_rect_coord.rawRect().intersects(pixmap_rect_coord.rawRect()))
             {
                 // Calculate the pixmap rect to draw within.
-                const RectWorldPx pixmap_rect_px(projection::get().toPointWorldPx(pixmap_rect_coord.topLeftCoord(), controller_zoom), projection::get().toPointWorldPx(pixmap_rect_coord.bottomRightCoord(), controller_zoom));
+                const RectWorldPx pixmap_rect_px(
+                    projection::get().toPointWorldPx(pixmap_rect_coord.topLeftCoord(),
+                                                     controller_zoom),
+                    projection::get().toPointWorldPx(pixmap_rect_coord.bottomRightCoord(),
+                                                     controller_zoom));
 
                 // Translate to center point with required rotation.
                 painter.translate(pixmap_rect_px.centerPx().rawPoint());
                 painter.rotate(rotation());
 
                 // Draw the pixmap.
-                painter.drawPixmap(-pixmap_rect_px.rawRect().width() / 2.0, -pixmap_rect_px.rawRect().height() / 2.0, image());
+                painter.drawPixmap(-pixmap_rect_px.rawRect().width() / 2.0,
+                                   -pixmap_rect_px.rawRect().height() / 2.0, image());
 
                 // Un-translate.
                 painter.rotate(-rotation());
                 painter.translate(-pixmap_rect_px.centerPx().rawPoint());
 
                 // Do we have a meta-data value and should we display it at this zoom?
-                if(controller_zoom >= m_metadata_displayed_zoom_minimum && metadata(m_metadata_displayed_key).isNull() == false)
+                if(controller_zoom >= m_metadata_displayed_zoom_minimum
+                   && metadata(m_metadata_displayed_key).isNull() == false)
                 {
                     /// @todo calculate correct alignment for metadata displayed offset.
 
                     // Draw the text next to the point with an offset.
-                    painter.drawText(pixmap_rect_px.rawRect().topRight() + PointPx(m_metadata_displayed_alignment_offset_px, -m_metadata_displayed_alignment_offset_px).rawPoint(), metadata(m_metadata_displayed_key).toString());
+                    painter.drawText(pixmap_rect_px.rawRect().topRight()
+                                         + PointPx(m_metadata_displayed_alignment_offset_px,
+                                                   -m_metadata_displayed_alignment_offset_px)
+                                               .rawPoint(),
+                                     metadata(m_metadata_displayed_key).toString());
                 }
             }
         }

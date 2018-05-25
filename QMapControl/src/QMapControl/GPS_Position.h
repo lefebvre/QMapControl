@@ -1,27 +1,27 @@
 /*
-*
-* This file is part of QMapControl,
-* an open-source cross-platform map widget
-*
-* Copyright (C) 2007 - 2008 Kai Winter
-*
-* This program is free software: you can redistribute it and/or modify
-* it under the terms of the GNU Lesser General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU Lesser General Public License for more details.
-*
-* You should have received a copy of the GNU Lesser General Public License
-* along with QMapControl. If not, see <http://www.gnu.org/licenses/>.
-*
-* Contact e-mail: kaiwinter@gmx.de
-* Program URL   : http://qmapcontrol.sourceforge.net/
-*
-*/
+ *
+ * This file is part of QMapControl,
+ * an open-source cross-platform map widget
+ *
+ * Copyright (C) 2007 - 2008 Kai Winter
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with QMapControl. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Contact e-mail: kaiwinter@gmx.de
+ * Program URL   : http://qmapcontrol.sourceforge.net/
+ *
+ */
 
 #pragma once
 
@@ -34,7 +34,8 @@ namespace qmapcontrol
     //! Represents a coordinate from a GPS receiver
     /*!
      * This class is used to represent a coordinate which has been parsed from a NMEA string.
-     * This is not fully integrated in the API. An example which uses this data type can be found under Samples.
+     * This is not fully integrated in the API. An example which uses this data type can be found
+     * under Samples.
      *
      * @author Kai Winter <kaiwinter@gmx.de>
      * @author Chris Stylianou <chris5287@gmail.com>
@@ -51,16 +52,23 @@ namespace qmapcontrol
          * @param latitude_coord The latitude of the position.
          * @param latitude_direction The latitude direction (N/S).
          */
-        GPS_Position(const qreal& time, const qreal& longitude_coord, const std::string& longitude_direction, const qreal& latitude_coord, const std::string& latitude_direction);
+        GPS_Position(const qreal& time,
+                     const qreal& longitude_coord,
+                     const std::string& longitude_direction,
+                     const qreal& latitude_coord,
+                     const std::string& latitude_direction);
 
-//        //! Copy constructor.
-//        GPS_Position(const GPS_Position& other) = default; @todo re-add once MSVC supports default/delete syntax.
+        //        //! Copy constructor.
+        //        GPS_Position(const GPS_Position& other) = default; @todo re-add once MSVC supports
+        //        default/delete syntax.
 
-//        //! Copy assignment.
-//        GPS_Position& operator=(const GPS_Position& other) = default; @todo re-add once MSVC supports default/delete syntax.
+        //        //! Copy assignment.
+        //        GPS_Position& operator=(const GPS_Position& other) = default; @todo re-add once
+        //        MSVC supports default/delete syntax.
 
         //! Destructor.
-        virtual ~GPS_Position() { } /// = default; @todo re-add once MSVC supports default/delete syntax.
+        virtual ~GPS_Position() {
+        } /// = default; @todo re-add once MSVC supports default/delete syntax.
 
         /*!
          * Fetches the time.
