@@ -39,3 +39,6 @@ ui_*.h
 
 # Doxygen
 html/*
+
+# Extra Repo
+TriBITS/
