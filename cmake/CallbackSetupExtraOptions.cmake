@@ -54,6 +54,7 @@ MACRO(TRIBITS_REPOSITORY_SETUP_EXTRA_OPTIONS)
   ########################################
   # QMapControl PACKAGE SETUP
   ########################################
+  ADD_DEFINITIONS(-DQMAPCONTROL_LIBRARY)
 
   #
   # Default MPI to OFF
