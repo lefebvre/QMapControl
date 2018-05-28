@@ -75,11 +75,6 @@ MACRO(TRIBITS_REPOSITORY_SETUP_EXTRA_OPTIONS)
   # INCLUDE DIRECTORY SETUP
   ########################################
 
-  # Set up include paths for QMapControl packages
-  MESSAGE(STATUS "Adding QMapControl directories for relative include paths.")
-  INCLUDE_DIRECTORIES("${QMapControl_SOURCE_DIR}/QMapControl")
-  INCLUDE_DIRECTORIES("${QMapControl_BINARY_DIR}/QMapControl")
-
   ########################################
   # PLATFORM SETUP
   ########################################
