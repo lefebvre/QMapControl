@@ -52,6 +52,7 @@ src/QMapControl/GeometryLineString.h
 src/QMapControl/GeometryPoint.h
 src/QMapControl/GeometryPointShape.h
 src/QMapControl/GeometryPointShapeScaled.h
+src/QMapControl/GeometryPolygon.h
 src/QMapControl/GeometryWidget.h
 src/QMapControl/ImageManager.h
 src/QMapControl/Layer.h
@@ -67,7 +68,7 @@ src/QMapControl/QMapControl.h
 src/QMapControl/QProgressIndicator.h
 )
 
-QT_WRAP_CPP(MOC_RESULTS ${MOC_HEADERS})
+QT5_WRAP_CPP(MOC_RESULTS ${MOC_HEADERS})
 
 SET(HEADERS
 ${MOC_HEADERS}
@@ -76,7 +77,6 @@ src/QMapControl/GeometryPointArrow.h
 src/QMapControl/GeometryPointCircle.h
 src/QMapControl/GeometryPointImage.h
 src/QMapControl/GeometryPointImageScaled.h
-src/QMapControl/GeometryPolygon.h
 src/QMapControl/GeometryPolygonImage.h
 src/QMapControl/MapAdapterWMS.h
 src/QMapControl/Point.h
